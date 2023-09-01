@@ -32,7 +32,7 @@
               <div class="card-header">
                 <h3 class="card-title">
                   <i class="fas fa-chart-pie mr-1"></i>
-                  Keadaan peserta didik pada semester <?php echo $sekolah['sch_semester'] ?> Tahun Pelajaran <?php echo $sekolah['sch_tp']; ?>
+                  Status peserta didik pada semester <?php echo $sekolah['sch_semester'] ?> Tahun Pelajaran <?php echo $sekolah['sch_tp']; ?>
                 </h3>
               
               </div><!-- /.card-header -->
@@ -47,7 +47,7 @@
               <div class="icon">
                 <i class="ion ion-bag"></i>
               </div>
-              <a href="#" class="small-box-footer">Suluruh Peserta Didik</a>
+              <a href="#" class="small-box-footer">Seluruh Peserta Didik</a>
             </div>
           </div>
           <!-- ./col -->
