@@ -32,7 +32,7 @@
               <div class="icon">
                 <i class="ion ion-bag"></i>
               </div>
-              <a href="#" class="small-box-footer">Suluruh Peserta Didik</a>
+              <a href="#" class="small-box-footer">Seluruh Peserta Didik</a>
             </div>
           </div>
           <!-- ./col -->
