@@ -29,7 +29,9 @@ class Get extends CI_Controller {
       return $pecahkan[2] . ' ' . $bulan[ (int)$pecahkan[1] ] . ' ' . $pecahkan[0];
     }
 
+    //Bagaimana mengambil data session?
 		$kelas = $this->db->get_where('app_class', ['cl_code' => $cl_code])->row_array();
+    //$kelas = $this->db->get_where('app_class', ['cl_teacher' => $email])->row_array(); (?)
 		$siswa = $this->db->get_where('app_student', ['std_class_code' => $cl_code])->result();
 
 		$data = '';
@@ -89,6 +91,9 @@ class Get extends CI_Controller {
 		echo json_encode($data);
 
 	}
+
+
+
 
   public function data_hari()
   {
