@@ -16,7 +16,10 @@ class Administrator extends CI_Controller {
 			redirect('','refresh');
 		}
 
+		//$data['user'] = AMBIL SESSION DI ATAS
 		$data['siswa'] = $this->db->get('app_student')->num_rows();
+		//$data['kelas'] = $this->db->get_where('app_class',['cl_teacher' => 'SESSION TADI'])->num_rows();
+		//$data['siswa'] = $this->db->get_where('app_student',['abs_ket' => '1'])->num_rows();
 		$data['sakit'] = $this->db->get_where('std_rekap_absen',['abs_ket' => '1'])->num_rows();
 		$data['ijin'] = $this->db->get_where('std_rekap_absen',['abs_ket' => '2'])->num_rows();
 		$data['bolos'] = $this->db->get_where('std_rekap_absen',['abs_ket' => '3'])->num_rows();
