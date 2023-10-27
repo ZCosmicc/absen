@@ -20,6 +20,12 @@ class Administrator extends CI_Controller {
 		$data['siswa'] = $this->db->get('app_student')->num_rows();
 		//$data['kelas'] = $this->db->get_where('app_class',['cl_teacher' => 'SESSION TADI'])->num_rows();
 		//$data['siswa'] = $this->db->get_where('app_student',['abs_ket' => '1'])->num_rows();
+
+		//Update percobaan baru. harus mengetahui apakah ada keterkaitan antar db
+		// $email = $this->session->userdata('email');
+		// $this->db->where('cl_teacher', $email);
+		// $data['kelas'] = $this->db->get('app_class')->result();
+
 		$data['sakit'] = $this->db->get_where('std_rekap_absen',['abs_ket' => '1'])->num_rows();
 		$data['ijin'] = $this->db->get_where('std_rekap_absen',['abs_ket' => '2'])->num_rows();
 		$data['bolos'] = $this->db->get_where('std_rekap_absen',['abs_ket' => '3'])->num_rows();
