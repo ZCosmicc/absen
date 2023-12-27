@@ -20,6 +20,7 @@
     </div><!-- /.container-fluid -->
     </section>
 
+    <!-- Main content -->
     <section class="content">
       <div class="flash_success" data-flash_success="<?php echo $this->session->flashdata('success'); ?>"></div>
       <div class="flash_error" data-flash_error="<?php echo $this->session->flashdata('error'); ?>"></div>
@@ -32,11 +33,7 @@
           <!-- /.card-header -->
           <div class="card-body">
             <div class="row">
-               <!-- <div class="col-md-6">
-                <div class="form-group">
-                  <input id="date" type="date" class="form-control" value="<#?php  echo date('Y-m-d') ?>">
-                </div>
-              </div> -->
+
               <div class="col-md-6">
                 <div class="form-group">
                   
@@ -53,6 +50,8 @@
           </div>
 
         </div>
+
+
 
         <form action="<?php echo base_url() ?>administrator/data_siswa" method="post">
         <div class="card card-default" id="datakelas">
@@ -73,11 +72,15 @@
                 <br>
                 <table class="table">
                   <thead>
-                    <tr>
+                    <tr> 	
                       <th>No</th>
                       <th>Nama</th>
-                      <th>Absensi</th>
-                      <th>Keterangan Lain</th>
+                      <th>NISN</th>
+                      <th>Kelas</th>
+                      <th>Alamat</th>
+                      <th>No Telp</th>
+                      <th>Email</th>
+                      <th>Aksi</th>
                     </tr>
                   </thead>
                 </table>
@@ -90,5 +93,6 @@
 
       </form>
     </section>
+    <!-- /.content -->
 
 </div>
