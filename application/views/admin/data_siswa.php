@@ -36,8 +36,8 @@
                 <div class="form-group">
                   <input id="date" type="date" class="form-control" value="<#?php  echo date('Y-m-d') ?>">
                 </div>
-              </div>
-              <div class="col-md-6"> -->
+              </div> -->
+              <div class="col-md-6">
                 <div class="form-group">
                   
                   <select id="kelas" class="form-control select2" style="width: 100%;" required="">
@@ -53,5 +53,42 @@
           </div>
 
         </div>
+
+        <form action="<?php echo base_url() ?>administrator/data_siswa" method="post">
+        <div class="card card-default" id="datakelas">
+          <div class="card-header"> 
+            <h3 class="card-title">Data Siswa</h3>
+          </div>
+          <!-- /.card-header -->
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-12">
+                
+                <table>
+                  <tr>
+                    <td style="padding-right: 20px">Nama Kelas</td><td>:</td><td style="padding-left: 10px">Silahkan pilih kelas</td>
+                  </tr>
+                  
+                </table>
+                <br>
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>No</th>
+                      <th>Nama</th>
+                      <th>Absensi</th>
+                      <th>Keterangan Lain</th>
+                    </tr>
+                  </thead>
+                </table>
+            </div>
+          </div>
+
+        </div>
+        <!-- /.card -->
+      </div><!-- /.container-fluid -->
+
+      </form>
+    </section>
 
 </div>
