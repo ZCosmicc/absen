@@ -19,8 +19,13 @@
         </div>
       </div>
     </form> -->
-    <?php if (isset($email) && isset($role)) : ?>
-        <p>Welcome, <?php echo $email; ?> (<?php echo $role; ?>)</p>
+    <?php
+    $email = $this->session->userdata('email');
+    $role = $this->session->userdata('role');
+    ?>
+
+    <?php if ($email !== null && $role !== null) : ?>
+        <p>Selamat datang, <?php echo $email; ?> (<?php echo $role; ?>)</p>
     <?php endif; ?>
 
     
