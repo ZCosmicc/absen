@@ -16,7 +16,11 @@
 </head>
 <body class="hold-transition login-page">
 <div class="login-box">
+
   <div class="login-logo">
+    <img src="<?= base_url()?>assets/img/logo.png" alt="Logo Sekolah" class="brand-image img-circle elevation-3"
+           style="opacity: .8; width: 100px; height: 100px;">
+           <br>
     <a href="#"><b>Absensi</b> Siswa</a>
   </div>
   <!-- /.login-logo -->
