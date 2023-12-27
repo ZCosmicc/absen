@@ -16,6 +16,8 @@ class Administrator extends CI_Controller {
 			redirect('','refresh');
 		}
 
+		$email = $this->session->userdata('email');
+    	$role = $this->session->userdata('role');
 		
 		//Perbaruan terbaik untuk menampilkan jumlah siswa yang sudah dipilah, tapi apa yang salah pada bagian foreachnya itu tidak diketahui 🤔
 		// $email = $this->session->userdata('email');

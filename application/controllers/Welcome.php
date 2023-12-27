@@ -34,6 +34,7 @@ class Welcome extends CI_Controller {
 				$data = 
 				[
 					'email' => $email,
+					'role' => $query['role'],
 					'session' => date('d-m-Y H:m:s'),
 				];
 				
