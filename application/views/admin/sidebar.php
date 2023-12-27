@@ -68,6 +68,16 @@ $segmen3 = $this->uri->segment(3);
               </li>
             </ul>
           </li>
+
+          <li class="nav-item">
+            <a href="<?php echo site_url(); ?>administrator/data_siswa" class="nav-link <?php if ($segmen1 == 'administrator' && $segmen2 == 'data_siswa') {echo 'active';} ?>">
+              <i class="nav-icon fas fa-edit"></i>
+              <p>
+                Data Siswa
+              </p>
+            </a>
+          </li>
+
            <li class="nav-item">
             <a href="<?php echo site_url(); ?>welcome/logout" class="nav-link">
               <i class="nav-icon far fa-circle text-warning"></i>

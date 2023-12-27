@@ -250,6 +250,24 @@ class Administrator extends CI_Controller {
 		$this->load->view('admin/script');
 	}
 
+	//================================================================ BARU ===========================================================
+
+	public function data_siswa()
+	{
+		if (! $this->session->userdata('email')) {
+			redirect('','refresh');
+		}
+
+		$data['kelas'] = $this->db->get('app_class')->result();
+
+		$this->load->view('admin/meta');
+		$this->load->view('admin/header');
+		$this->load->view('admin/sidebar');
+		$this->load->view('admin/data_siswa', $data);
+		$this->load->view('admin/footer');
+		$this->load->view('admin/script');
+	}
+
 }
 
 /* End of file Administrator.php */
