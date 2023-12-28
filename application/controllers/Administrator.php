@@ -268,6 +268,92 @@ class Administrator extends CI_Controller {
 		$this->load->view('admin/script');
 	}
 
+	public function data_siswa_tambah()
+	{
+		if (! $this->session->userdata('email')) {
+			redirect('','refresh');
+		}
+
+		$data['kelas'] = $this->db->get('app_class')->result();
+
+		$this->load->view('admin/meta');
+		$this->load->view('admin/header');
+		$this->load->view('admin/sidebar');
+		$this->load->view('admin/data_siswa_tambah', $data);
+		$this->load->view('admin/footer');
+		$this->load->view('admin/script');
+	}
+
+	public function input_siswa()
+{
+    $class_info = $this->db->get_where('app_class', ['cl_code' => $this->input->post('kelas')])->row_array();
+
+    $data = array(
+        'id_' => '',
+        'std_name' => $this->input->post('nama'),
+        'std_nisn' => $this->input->post('nisn'),
+        'std_class_code' => $this->input->post('kelas'),
+        'std_class_name' => $class_info['cl_name'],
+        'std_grade' => $class_info['cl_grade'],
+        'std_major' => '-',
+        'std_address' => $this->input->post('alamat'),
+        'std_hp' => $this->input->post('hp'),
+        'std_email' => $this->input->post('email'),
+        'std_activity' => '-',
+        'std_sick' => '-',
+        'std_ijin' => '-',
+        'std_absen' => '-',
+        'std_status' => '1'
+    );
+
+    $insert = $this->modelinsert->siswa($data);
+    if ($insert) {
+        $this->session->set_flashdata('success', 'Input data siswa '.$this->input->post('nama').' berhasil');
+        redirect('administrator/data_siswa','refresh');
+    } else {
+        $this->session->set_flashdata('error', 'Input data absen kelas '.$this->input->post('kelas').' gagal');
+        redirect('administrator/data_siswa','refresh');
+    }
+}
+
+	public function edit_siswa()
+{
+    $class_info = $this->db->get_where('app_class', ['cl_code' => $this->input->post('kelas')])->row_array();
+
+    $data = array(
+        'id_' => '',
+        'std_name' => $this->input->post('nama'),
+        'std_nisn' => $this->input->post('nisn'),
+        'std_class_code' => $this->input->post('kelas'),
+        'std_class_name' => $class_info['cl_name'],
+        'std_grade' => $class_info['cl_grade'],
+        'std_major' => '-',
+        'std_address' => $this->input->post('alamat'),
+        'std_hp' => $this->input->post('hp'),
+        'std_email' => $this->input->post('email'),
+        'std_activity' => '-',
+        'std_sick' => '-',
+        'std_ijin' => '-',
+        'std_absen' => '-',
+        'std_status' => '1'
+    );
+
+	$this->db->where('std_nisn', $this->input->post('nisn'));
+    $update = $this->modelupdate->update_siswa($data);
+
+    if ($update) {
+        $this->session->set_flashdata('success', 'Update data siswa '.$this->input->post('nama').' berhasil');
+        redirect('administrator/data_siswa','refresh');
+    } else {
+        $this->session->set_flashdata('error', 'Update data siswa '.$this->input->post('nama').' gagal');
+        redirect('administrator/data_siswa','refresh');
+    }
+}
+
+
+
+
+
 }
 
 /* End of file Administrator.php */

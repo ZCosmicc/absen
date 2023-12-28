@@ -22,7 +22,45 @@ class Modelinsert extends CI_Model {
 
 	}	
 
+	function siswa($data)
+{
+    try {
+        $this->db->insert('app_student', $data);
+
+        // Check if the insert was successful
+        if ($this->db->affected_rows() > 0) {
+            return TRUE;
+        } else {
+            return FALSE;
+        }
+    } catch (Exception $e) {
+        // Log or print the error message for debugging
+        log_message('error', $e->getMessage());
+        return FALSE;
+    }
+}
+// Modelinsert.php
+function update_siswa($data)
+{
+    try {
+        $this->db->where('std_nisn', $this->input->post('nisn'));
+        $this->db->update('app_student', $data);
+
+        // Check if the update was successful
+        if ($this->db->affected_rows() > 0) {
+            return TRUE;
+        } else {
+            return FALSE;
+        }
+    } catch (Exception $e) {
+        // Log or print the error message for debugging
+        log_message('error', $e->getMessage());
+        return FALSE;
+    }
 }
 
-/* End of file Modelinsert.php */
-/* Location: ./application/models/Modelinsert.php */
+
+}
+
+// /* End of file Modelinsert.php */
+// /* Location: ./application/models/Modelinsert.php */

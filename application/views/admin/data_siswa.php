@@ -15,6 +15,7 @@
             <a href="<?php echo base_url('administrator/data_siswa_tambah'); ?>" class="btn btn-success float-right">
                 Tambah
             </a>
+            
             </div>
         </div>
     </div><!-- /.container-fluid -->

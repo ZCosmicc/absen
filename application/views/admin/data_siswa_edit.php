@@ -22,19 +22,19 @@
         <div class="container-fluid">
 
 
-            <form action="<?php echo base_url() ?>administrator/input_siswa" method="post">
+            <form action="<?php echo base_url() ?>administrator/edit_siswa" method="post">
                 <div class="card card-default" id="datakelas">
                     <div class="card-header">
-                        <h3 class="card-title">Tambah Data Siswa</h3>
+                        <h3 class="card-title">Edit Data Siswa</h3>
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-12">
-                                <form action="<?php echo base_url() ?>administrator/input_siswa" method="post">
+                                <form action="<?php echo base_url() ?>administrator/edit_siswa" method="post">
                                     <div class="form-group">
                                         <label for="nama">Nama Siswa:</label>
-                                        <input type="text" class="form-control" id="nama" name="nama" required>
+                                        <input type="text" class="form-control" id="nama" name="nama"  required>
                                     </div>
                                     <div class="form-group">
                                         <label for="nisn">NISN Siswa:</label>
@@ -62,7 +62,7 @@
                                         <input type="text" class="form-control" id="email" name="email" required>
                                     </div>
 
-                                    <button type="submit" class="btn btn-primary">Tambah Siswa</button>
+                                    <button type="submit" class="btn btn-primary">Edit</button>
                                 </form>
                             </div>
                         </div>
