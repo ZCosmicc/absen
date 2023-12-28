@@ -40,24 +40,36 @@ class Modelinsert extends CI_Model {
     }
 }
 // Modelinsert.php
-function update_siswa($data)
+function update_siswa($data, $id)
 {
     try {
-        $this->db->where('std_nisn', $this->input->post('nisn'));
+        $this->db->where('id_', $id);
         $this->db->update('app_student', $data);
 
         // Check if the update was successful
-        if ($this->db->affected_rows() > 0) {
-            return TRUE;
-        } else {
-            return FALSE;
-        }
+        return $this->db->affected_rows() > 0;
     } catch (Exception $e) {
         // Log or print the error message for debugging
         log_message('error', $e->getMessage());
         return FALSE;
     }
 }
+function delete_siswa($student_id)
+{
+    try {
+        // Assuming 'id_' is the correct column name
+        $this->db->where('id_', $student_id);
+        $this->db->delete('app_student');
+
+        // Check if the delete was successful
+        return $this->db->affected_rows() > 0;
+    } catch (Exception $e) {
+        // Log or print the error message for debugging
+        log_message('error', $e->getMessage());
+        return FALSE;
+    }
+}
+
 
 
 }

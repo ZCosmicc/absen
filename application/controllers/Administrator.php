@@ -283,6 +283,25 @@ class Administrator extends CI_Controller {
 		$this->load->view('admin/footer');
 		$this->load->view('admin/script');
 	}
+	
+	public function data_siswa_edit($student_id)
+{
+    if (!$this->session->userdata('email')) {
+        redirect('', 'refresh');
+    }
+
+    // Assuming you have a column named 'id_' as the primary key
+    $data['siswa'] = $this->db->get_where('app_student', array('id_' => $student_id))->row();
+	$data['kelas'] = $this->db->get('app_class')->result();
+    $this->load->view('admin/meta');
+    $this->load->view('admin/header');
+    $this->load->view('admin/sidebar');
+    $this->load->view('admin/data_siswa_edit', $data);
+    $this->load->view('admin/footer');
+    $this->load->view('admin/script');
+}
+
+	
 
 	public function input_siswa()
 {
@@ -316,10 +335,9 @@ class Administrator extends CI_Controller {
     }
 }
 
-	public function edit_siswa()
+public function edit_siswa()
 {
     $class_info = $this->db->get_where('app_class', ['cl_code' => $this->input->post('kelas')])->row_array();
-
     $data = array(
         'id_' => '',
         'std_name' => $this->input->post('nama'),
@@ -337,17 +355,37 @@ class Administrator extends CI_Controller {
         'std_absen' => '-',
         'std_status' => '1'
     );
-
-	$this->db->where('std_nisn', $this->input->post('nisn'));
-    $update = $this->modelupdate->update_siswa($data);
+    $id = $this->input->post('id_');
+    $update = $this->modelinsert->update_siswa($data, $id);  // Pass both $data and $id
 
     if ($update) {
-        $this->session->set_flashdata('success', 'Update data siswa '.$this->input->post('nama').' berhasil');
-        redirect('administrator/data_siswa','refresh');
+        $this->session->set_flashdata('success', 'Update data siswa ' . $this->input->post('nama') . ' berhasil');
+        redirect('administrator/data_siswa', 'refresh');
     } else {
-        $this->session->set_flashdata('error', 'Update data siswa '.$this->input->post('nama').' gagal');
-        redirect('administrator/data_siswa','refresh');
+        $this->session->set_flashdata('error', 'Update data siswa ' . $this->input->post('nama') . ' gagal');
+        redirect('administrator/data_siswa', 'refresh');
     }
+}
+public function data_siswa_hapus($student_id)
+{
+    if (!$this->session->userdata('email')) {
+        redirect('', 'refresh');
+    }
+
+    // Load the model that contains the delete function
+    $this->load->model('modelinsert');
+
+    // Call the delete function
+    $result = $this->modelinsert->delete_siswa($student_id);
+
+    if ($result) {
+        $this->session->set_flashdata('success', 'Data siswa berhasil dihapus');
+    } else {
+        $this->session->set_flashdata('error', 'Gagal menghapus data siswa');
+    }
+
+    // Redirect to the data_siswa page or any other page you prefer
+    redirect('administrator/data_siswa', 'refresh');
 }
 
 

@@ -148,14 +148,10 @@ class Get extends CI_Controller {
           $data .= $siswa->std_email;
           $data .= '</td><td>';
 
-          $data .= '<div class="col-md-12">
-                        <button type="button" class="btn btn-success float-left" data-toggle="modal" data-target="#editModal">
-                        Edit
-                        </button>
-                        <button type="button" class="btn btn-success float-left" data-toggle="modal" data-target="#hapusModal">
-                        Hapus
-                        </button>
-                    </div>';
+          $data .= '<a href="'.base_url('administrator/data_siswa_edit/'.$siswa->id_).'" class="btn btn-success float-left">Edit</a>';
+          $data .= '<a href="'.base_url('administrator/data_siswa_hapus/'.$siswa->id_).'" class="btn btn-danger float-left" onclick="return confirm(\'Apakah Anda yakin ingin menghapus data ini?\')">Hapus</a>';
+
+          
           $data .= '</td>';
         	$data .= '</tr>';
 
