@@ -11,11 +11,7 @@
                 <li class="breadcrumb-item active">Siswa</li>
                 </ol>
             </div>
-            <div class="col-md-12">
-            <a href="<?php echo base_url('administrator/data_siswa_tambah'); ?>" class="btn btn-success float-right">
-                Tambah
-            </a>
-            </div>
+            
         </div>
     </div><!-- /.container-fluid -->
     </section>
