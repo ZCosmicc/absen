@@ -54,13 +54,36 @@
 			var date = $('#date').val()
 
 			$.ajax({
-				url: '<?php echo base_url(); ?>get/datasiswa',
+				url: '<?php echo base_url(); ?>get/datasiswaabsen',
 				type: 'post',
 				data: {cl_code:cl_code, date:date},
 				dataType: 'json',
 				success: function(data)
 				{
 					$('#datakelas').html(data);
+				},
+				error:function()
+				{
+					alert('error');
+				}
+			})
+		});
+	});
+</script>
+
+<script>
+	$(document).ready(function(){
+		$('#kelas').change(function(){
+			var cl_code = $(this).val();
+
+			$.ajax({
+				url: '<?php echo base_url(); ?>get/datasiswab',
+				type: 'post',
+				data: {cl_code:cl_code, date:date},
+				dataType: 'json',
+				success: function(data)
+				{
+					$('#datakelasb').html(data);
 				},
 				error:function()
 				{

@@ -54,7 +54,7 @@
 
 
         <form action="<?php echo base_url() ?>administrator/data_siswa" method="post">
-        <div class="card card-default" id="datakelas">
+        <div class="card card-default" id="datakelasb">
           <div class="card-header"> 
             <h3 class="card-title">Data Siswa</h3>
           </div>

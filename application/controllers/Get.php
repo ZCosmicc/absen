@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Get extends CI_Controller {
 
-	public function datasiswa()
+	public function datasiswaabsen()
 	{
 		$cl_code = $_POST['cl_code'];
     $tg = $_POST['date'];
@@ -79,6 +79,63 @@ class Get extends CI_Controller {
 					<option value="3">Tanpa Keterangan</option>
 					</select>';
         	$data .= '</td>';
+        	$data .= '<td>';
+        	$data .= '<input type="text" name="ket_lain[]" id="ket_lain" class="form-control">';
+        	$data .= '</td></tr>';
+
+        }
+        $data .= '</tbody></table>';
+        $data .= '</div></div></div></div>';
+        $data .= '<button type="submit" class="btn btn-success">Input</button>';
+        	
+		echo json_encode($data);
+
+	}
+
+  public function datasiswab()
+	{
+		$cl_code = $_POST['cl_code'];
+
+		$kelas = $this->db->get_where('app_class', ['cl_code' => $cl_code])->row_array();
+    //$kelas = $this->db->get_where('app_class', ['cl_teacher' => $email])->row_array(); (?)
+		$siswa = $this->db->get_where('app_student', ['std_class_code' => $cl_code])->result();
+
+		$data = '';
+		$data .= '<div class="card-header"><h3 class="card-title">Input Absensi</h3></div><div class="card-body">
+            <div class="row">
+              <div class="col-md-12">
+                <table>
+                  <tr>
+                    <td style="padding-right: 20px">Nama Kelas</td><td>:</td><td style="padding-left: 10px">';
+        $data .= $kelas['cl_name'];
+        $data .= '<input type="hidden" name="class_name" value="'.$kelas["cl_name"].'"> ';
+        $data .= '<input type="hidden" name="class_code" value="'.$cl_code.'"> ';
+
+        $data .= '<input type="hidden" name="date" value="'.$tg.'"> ';
+        $data .= '</td>
+                  </tr><tr><td>Tanggal</td><td>:</td><td style="padding-left: 10px">';
+        $data .= tgl_indo($tg);
+        $data .= '</td>
+                  </tr>
+                </table>
+                <br>
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>No</th>
+                      <th>Nama</th>
+                      <th>Keterangan Lain</th>
+                    </tr>
+                  </thead>
+                  <tbody>';
+        $no = 1;
+        foreach ($siswa as $siswa) {
+        	$data .= '<input type="hidden" name="std_nisn[]" id="std_nisn" value="'.$siswa->std_nisn.'">';
+        	$data .= '<tr><td>';
+        	$data .= $no++;
+        	$data .= '</td>';
+        	$data .= '<td>';
+        	$data .= $siswa->std_name;
         	$data .= '<td>';
         	$data .= '<input type="text" name="ket_lain[]" id="ket_lain" class="form-control">';
         	$data .= '</td></tr>';
