@@ -101,7 +101,7 @@ class Get extends CI_Controller {
 		$siswa = $this->db->get_where('app_student', ['std_class_code' => $cl_code])->result();
 
 		$data = '';
-		$data .= '<div class="card-header"><h3 class="card-title">Input Absensi</h3></div><div class="card-body">
+		$data .= '<div class="card-header"><h3 class="card-title">Data Siswa</h3></div><div class="card-body">
             <div class="row">
               <div class="col-md-12">
                 <table>
@@ -110,11 +110,6 @@ class Get extends CI_Controller {
         $data .= $kelas['cl_name'];
         $data .= '<input type="hidden" name="class_name" value="'.$kelas["cl_name"].'"> ';
         $data .= '<input type="hidden" name="class_code" value="'.$cl_code.'"> ';
-
-        $data .= '<input type="hidden" name="date" value="'.$tg.'"> ';
-        $data .= '</td>
-                  </tr><tr><td>Tanggal</td><td>:</td><td style="padding-left: 10px">';
-        $data .= tgl_indo($tg);
         $data .= '</td>
                   </tr>
                 </table>
@@ -124,7 +119,12 @@ class Get extends CI_Controller {
                     <tr>
                       <th>No</th>
                       <th>Nama</th>
-                      <th>Keterangan Lain</th>
+                      <th>NISN</th>
+                      <th>Kelas</th>
+                      <th>Alamat</th>
+                      <th>No Telp</th>
+                      <th>Email</th>
+
                     </tr>
                   </thead>
                   <tbody>';
@@ -136,9 +136,7 @@ class Get extends CI_Controller {
         	$data .= '</td>';
         	$data .= '<td>';
         	$data .= $siswa->std_name;
-        	$data .= '<td>';
-        	$data .= '<input type="text" name="ket_lain[]" id="ket_lain" class="form-control">';
-        	$data .= '</td></tr>';
+        	$data .= '</tr>';
 
         }
         $data .= '</tbody></table>';
