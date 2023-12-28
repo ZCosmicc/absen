@@ -79,16 +79,14 @@
 			$.ajax({
 				url: '<?php echo base_url(); ?>get/datasiswab',
 				type: 'post',
-				data: {cl_code:cl_code, date:date},
+				data: {cl_code:cl_code},
 				dataType: 'json',
 				success: function(data)
 				{
+					console.log(data);
 					$('#datakelasb').html(data);
 				},
-				error:function()
-				{
-					alert('error');
-				}
+				
 			})
 		});
 	});

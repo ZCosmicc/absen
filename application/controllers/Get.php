@@ -124,7 +124,7 @@ class Get extends CI_Controller {
                       <th>Alamat</th>
                       <th>No Telp</th>
                       <th>Email</th>
-
+                      <th>Aksi</th>
                     </tr>
                   </thead>
                   <tbody>';
@@ -136,12 +136,32 @@ class Get extends CI_Controller {
         	$data .= '</td>';
         	$data .= '<td>';
         	$data .= $siswa->std_name;
+          $data .= '</td><td>';
+          $data .= $siswa->std_nisn;
+          $data .= '</td><td>';
+          $data .= $siswa->std_class_name;
+          $data .= '</td><td>';
+          $data .= $siswa->std_address;
+          $data .= '</td><td>';
+          $data .= $siswa->std_hp;
+          $data .= '</td><td>';
+          $data .= $siswa->std_email;
+          $data .= '</td><td>';
+
+          $data .= '<div class="col-md-12">
+                        <button type="button" class="btn btn-success float-left" data-toggle="modal" data-target="#editModal">
+                        Edit
+                        </button>
+                        <button type="button" class="btn btn-success float-left" data-toggle="modal" data-target="#hapusModal">
+                        Hapus
+                        </button>
+                    </div>';
+          $data .= '</td>';
         	$data .= '</tr>';
 
         }
         $data .= '</tbody></table>';
         $data .= '</div></div></div></div>';
-        $data .= '<button type="submit" class="btn btn-success">Input</button>';
         	
 		echo json_encode($data);
 
