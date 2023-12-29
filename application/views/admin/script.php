@@ -94,6 +94,27 @@
 
 <script>
 	$(document).ready(function(){
+		$('#guru').change(function(){
+			var cl_code = $(this).val();
+
+			$.ajax({
+				url: '<?php echo base_url(); ?>get/dataguru',
+				type: 'post',
+				data: {cl_code:cl_code},
+				dataType: 'json',
+				success: function(data)
+				{
+					console.log(data);
+					$('#dataguru').html(data);
+				},
+				
+			})
+		});
+	});
+</script>
+
+<script>
+	$(document).ready(function(){
 		var tombolcetak = document.getElementById('tombol-cetak');
 		$('#kelash').change(function(){
 			tombolcetak.style.display='block';

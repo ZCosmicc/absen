@@ -388,7 +388,21 @@ public function data_siswa_hapus($student_id)
     redirect('administrator/data_siswa', 'refresh');
 }
 
+public function data_guru()
+	{
+		if (! $this->session->userdata('email')) {
+			redirect('','refresh');
+		}
 
+		$data['gurus'] = $this->db->get('app_absen_user')->result();
+
+		$this->load->view('admin/meta');
+		$this->load->view('admin/header');
+		$this->load->view('admin/sidebar');
+		$this->load->view('admin/data_guru', $data);
+		$this->load->view('admin/footer');
+		$this->load->view('admin/script');
+	}
 
 
 
