@@ -403,7 +403,7 @@ public function data_guru()
 		$this->load->view('admin/footer');
 		$this->load->view('admin/script');
 	}
-
+	//db masuk
 
 
 }
