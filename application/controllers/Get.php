@@ -164,24 +164,18 @@ class Get extends CI_Controller {
 	}
 
   public function dataguru()
-	{
-		$role = 'guru';
+{
+    $role = 'admin';
 
-		$guru = $this->db->get_where('app_absen_user', ['role' => $role])->row_array();
+    $gurus = $this->db->get_where('app_absen_user', ['role' => $role])->result();
 
-
-		$data = '';
-		$data .= '<div class="card-header"><h3 class="card-title">Data Guru</h3></div><div class="card-body">
+    $data = '';
+    $data .= '<div class="card-header"><h3 class="card-title">Data Guru</h3></div><div class="card-body">
             <div class="row">
               <div class="col-md-12">
                 <table>
                   <tr>';
-        //             <td style="padding-right: 20px">Nama Kelas</td><td>:</td><td style="padding-left: 10px">
-        // $data .= $guru['cl_name'];
-        // $data .= '<input type="hidden" name="class_name" value="'.$kelas["cl_name"].'"> ';
-        // $data .= '<input type="hidden" name="class_code" value="'.$cl_code.'"> ';
-        // $data .= '</td>
-        $data .= '</tr>
+    $data .= '</tr>
                 </table>
                 <br>
                 <table class="table">
@@ -190,40 +184,32 @@ class Get extends CI_Controller {
                       <th>No</th>
                       <th>Email</th>
                       <th>Nama</th>
-                      <th>Kelas</th>
+                      <th>Password</th>
+                      <th>Role</th>
                       <th>Aksi</th>
                     </tr>
                   </thead>
                   <tbody>';
-        $no = 1;
-        foreach ($guru as $guru) {
-        	// $data .= '<input type="hidden" name="std_nisn[]" id="std_nisn" value="'.$siswa->std_nisn.'">';
-        	$data .= '<tr><td>';
-        	$data .= $no++;
-        	$data .= '</td>';
-        	$data .= '<td>';
-        	$data .= $guru->email;
-          $data .= '</td><td>';
-          $data .= $siswa->name;
-          $data .= '</td><td>';
-          $data .= '-';
-          $data .= '</td><td>';
+    $no = 1;
+    foreach ($gurus as $guru) {
+        $data .= '<tr>';
+        $data .= '<td>' . $no++ . '</td>';
+        $data .= '<td>' . $guru->email . '</td><td>';
+        $data .= $guru->name . '</td><td>';
+        $data .= $guru->password . '</td><td>';
+        $data .= $guru->role . '</td><td>';
+        $data .= '<a href="' . base_url('administrator/data_guru_edit/' . $guru->id_) . '" class="btn btn-success float-left">Edit</a>';
+        $data .= '<a href="' . base_url('administrator/data_guru_hapus/' . $guru->id_) . '" class="btn btn-danger float-left" onclick="return confirm(\'Apakah Anda yakin ingin menghapus data ini?\')">Hapus</a>';
+        $data .= '</td>';
+        $data .= '</tr>';
+    }
+
+    $data .= '</tbody></table>';
+    $data .= '</div></div></div></div>';
+    echo $data;
+}
 
 
-          $data .= '<a href="'.base_url('administrator/data_guru_edit/'.$guru->id_).'" class="btn btn-success float-left">Edit</a>';
-          $data .= '<a href="'.base_url('administrator/data_guru_hapus/'.$guru->id_).'" class="btn btn-danger float-left" onclick="return confirm(\'Apakah Anda yakin ingin menghapus data ini?\')">Hapus</a>';
-
-          
-          $data .= '</td>';
-        	$data .= '</tr>';
-
-        }
-        $data .= '</tbody></table>';
-        $data .= '</div></div></div></div>';
-        	
-		echo json_encode($data);
-
-	}
 
 
 

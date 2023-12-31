@@ -39,12 +39,43 @@ class Modelinsert extends CI_Model {
         return FALSE;
     }
 }
-// Modelinsert.php
+	function guru($data)
+{
+    try {
+        $this->db->insert('app_absen_user', $data);
+
+        // Check if the insert was successful
+        if ($this->db->affected_rows() > 0) {
+            return TRUE;
+        } else {
+            return FALSE;
+        }
+    } catch (Exception $e) {
+        // Log or print the error message for debugging
+        log_message('error', $e->getMessage());
+        return FALSE;
+    }
+}
+
 function update_siswa($data, $id)
 {
     try {
         $this->db->where('id_', $id);
         $this->db->update('app_student', $data);
+
+        // Check if the update was successful
+        return $this->db->affected_rows() > 0;
+    } catch (Exception $e) {
+        // Log or print the error message for debugging
+        log_message('error', $e->getMessage());
+        return FALSE;
+    }
+}
+function update_guru($data, $id)
+{
+    try {
+        $this->db->where('id_', $id);
+        $this->db->update('app_absen_user', $data);
 
         // Check if the update was successful
         return $this->db->affected_rows() > 0;
@@ -60,6 +91,21 @@ function delete_siswa($student_id)
         // Assuming 'id_' is the correct column name
         $this->db->where('id_', $student_id);
         $this->db->delete('app_student');
+
+        // Check if the delete was successful
+        return $this->db->affected_rows() > 0;
+    } catch (Exception $e) {
+        // Log or print the error message for debugging
+        log_message('error', $e->getMessage());
+        return FALSE;
+    }
+}
+function delete_guru($student_id)
+{
+    try {
+        // Assuming 'id_' is the correct column name
+        $this->db->where('id_', $student_id);
+        $this->db->delete('app_absen_user');
 
         // Check if the delete was successful
         return $this->db->affected_rows() > 0;

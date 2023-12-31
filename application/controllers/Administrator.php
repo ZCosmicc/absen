@@ -267,6 +267,39 @@ class Administrator extends CI_Controller {
 		$this->load->view('admin/footer');
 		$this->load->view('admin/script');
 	}
+	
+public function data_guru()
+{
+	if (! $this->session->userdata('email')) {
+		redirect('','refresh');
+	}
+
+	$data['gurus'] = $this->db->get('app_absen_user')->result();
+
+	$this->load->view('admin/meta');
+	$this->load->view('admin/header');
+	$this->load->view('admin/sidebar');
+	$this->load->view('admin/data_guru', $data);
+	$this->load->view('admin/footer');
+	$this->load->view('admin/script');
+}
+
+public function data_guru_tambah()
+{
+	if (! $this->session->userdata('email')) {
+		redirect('','refresh');
+	}
+
+	$data['gurus'] = $this->db->get('app_absen_user')->result();
+
+	$this->load->view('admin/meta');
+	$this->load->view('admin/header');
+	$this->load->view('admin/sidebar');
+	$this->load->view('admin/data_guru_tambah', $data);
+	$this->load->view('admin/footer');
+	$this->load->view('admin/script');
+}
+
 
 	public function data_siswa_tambah()
 	{
@@ -297,6 +330,19 @@ class Administrator extends CI_Controller {
     $this->load->view('admin/header');
     $this->load->view('admin/sidebar');
     $this->load->view('admin/data_siswa_edit', $data);
+    $this->load->view('admin/footer');
+    $this->load->view('admin/script');
+}
+	public function data_guru_edit($student_id)
+{
+    if (!$this->session->userdata('email')) {
+        redirect('', 'refresh');
+    }
+	$data['gurus'] = $this->db->get_where('app_absen_user', array('id_' => $student_id))->row();
+    $this->load->view('admin/meta');
+    $this->load->view('admin/header');
+    $this->load->view('admin/sidebar');
+    $this->load->view('admin/data_guru_edit', $data);
     $this->load->view('admin/footer');
     $this->load->view('admin/script');
 }
@@ -334,6 +380,30 @@ class Administrator extends CI_Controller {
         redirect('administrator/data_siswa','refresh');
     }
 }
+public function input_guru()
+{
+    $password = $this->input->post('password');
+    // Hash the password using Bcrypt
+    $hashed_password = password_hash($password, PASSWORD_BCRYPT);
+
+    $data = array(
+        'id_' => '',
+        'email' => $this->input->post('email'),
+        'name' => $this->input->post('name'),
+        'password' => $hashed_password, // Store the hashed password
+        'role' => $this->input->post('role')
+    );
+
+    $insert = $this->modelinsert->guru($data);
+    if ($insert) {
+        $this->session->set_flashdata('success', 'Input data guru ' . $this->input->post('nama') . ' berhasil');
+        redirect('administrator/data_guru', 'refresh');
+    } else {
+        $this->session->set_flashdata('error', 'input data guru ' . $this->input->post('nama') . ' gagal');
+        redirect('administrator/data_siswa', 'refresh');
+    }
+}
+
 
 public function edit_siswa()
 {
@@ -366,6 +436,29 @@ public function edit_siswa()
         redirect('administrator/data_siswa', 'refresh');
     }
 }
+public function edit_guru()
+{
+	$password = $this->input->post('password');
+    // Hash the password using Bcrypt
+    $hashed_password = password_hash($password, PASSWORD_BCRYPT);
+    $data = array(
+        'id_' => '',
+        'email' => $this->input->post('email'),
+        'name' => $this->input->post('name'),
+        'password' => $hashed_password, // Store the hashed password
+        'role' => $this->input->post('role')
+    );
+    $id = $this->input->post('id_');
+    $update = $this->modelinsert->update_guru($data, $id);  // Pass both $data and $id
+
+    if ($update) {
+        $this->session->set_flashdata('success', 'Update data guru ' . $this->input->post('nama') . ' berhasil');
+        redirect('administrator/data_guru', 'refresh');
+    } else {
+        $this->session->set_flashdata('error', 'Update data guru ' . $this->input->post('nama') . ' gagal');
+        redirect('administrator/data_guru', 'refresh');
+    }
+}
 public function data_siswa_hapus($student_id)
 {
     if (!$this->session->userdata('email')) {
@@ -387,23 +480,28 @@ public function data_siswa_hapus($student_id)
     // Redirect to the data_siswa page or any other page you prefer
     redirect('administrator/data_siswa', 'refresh');
 }
+public function data_guru_hapus($student_id)
+{
+    if (!$this->session->userdata('email')) {
+        redirect('', 'refresh');
+    }
 
-public function data_guru()
-	{
-		if (! $this->session->userdata('email')) {
-			redirect('','refresh');
-		}
+    // Load the model that contains the delete function
+    $this->load->model('modelinsert');
 
-		$data['gurus'] = $this->db->get('app_absen_user')->result();
+    // Call the delete function
+    $result = $this->modelinsert->delete_guru($student_id);
 
-		$this->load->view('admin/meta');
-		$this->load->view('admin/header');
-		$this->load->view('admin/sidebar');
-		$this->load->view('admin/data_guru', $data);
-		$this->load->view('admin/footer');
-		$this->load->view('admin/script');
-	}
-	//db masuk
+    if ($result) {
+        $this->session->set_flashdata('success', 'Data guru berhasil dihapus');
+    } else {
+        $this->session->set_flashdata('error', 'Gagal menghapus data guru');
+    }
+
+    // Redirect to the data_siswa page or any other page you prefer
+    redirect('administrator/data_guru', 'refresh');
+}
+
 
 
 }
