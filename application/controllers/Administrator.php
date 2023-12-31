@@ -323,7 +323,6 @@ public function data_guru_tambah()
         redirect('', 'refresh');
     }
 
-    // Assuming you have a column named 'id_' as the primary key
     $data['siswa'] = $this->db->get_where('app_student', array('id_' => $student_id))->row();
 	$data['kelas'] = $this->db->get('app_class')->result();
     $this->load->view('admin/meta');
@@ -383,14 +382,13 @@ public function data_guru_tambah()
 public function input_guru()
 {
     $password = $this->input->post('password');
-    // Hash the password using Bcrypt
     $hashed_password = password_hash($password, PASSWORD_BCRYPT);
 
     $data = array(
         'id_' => '',
         'email' => $this->input->post('email'),
         'name' => $this->input->post('name'),
-        'password' => $hashed_password, // Store the hashed password
+        'password' => $hashed_password,
         'role' => $this->input->post('role')
     );
 
@@ -426,7 +424,7 @@ public function edit_siswa()
         'std_status' => '1'
     );
     $id = $this->input->post('id_');
-    $update = $this->modelinsert->update_siswa($data, $id);  // Pass both $data and $id
+    $update = $this->modelinsert->update_siswa($data, $id);
 
     if ($update) {
         $this->session->set_flashdata('success', 'Update data siswa ' . $this->input->post('nama') . ' berhasil');
@@ -439,17 +437,16 @@ public function edit_siswa()
 public function edit_guru()
 {
 	$password = $this->input->post('password');
-    // Hash the password using Bcrypt
     $hashed_password = password_hash($password, PASSWORD_BCRYPT);
     $data = array(
         'id_' => '',
         'email' => $this->input->post('email'),
         'name' => $this->input->post('name'),
-        'password' => $hashed_password, // Store the hashed password
+        'password' => $hashed_password,
         'role' => $this->input->post('role')
     );
     $id = $this->input->post('id_');
-    $update = $this->modelinsert->update_guru($data, $id);  // Pass both $data and $id
+    $update = $this->modelinsert->update_guru($data, $id);
 
     if ($update) {
         $this->session->set_flashdata('success', 'Update data guru ' . $this->input->post('nama') . ' berhasil');
@@ -465,10 +462,8 @@ public function data_siswa_hapus($student_id)
         redirect('', 'refresh');
     }
 
-    // Load the model that contains the delete function
     $this->load->model('modelinsert');
 
-    // Call the delete function
     $result = $this->modelinsert->delete_siswa($student_id);
 
     if ($result) {
@@ -477,7 +472,6 @@ public function data_siswa_hapus($student_id)
         $this->session->set_flashdata('error', 'Gagal menghapus data siswa');
     }
 
-    // Redirect to the data_siswa page or any other page you prefer
     redirect('administrator/data_siswa', 'refresh');
 }
 public function data_guru_hapus($student_id)
@@ -486,10 +480,8 @@ public function data_guru_hapus($student_id)
         redirect('', 'refresh');
     }
 
-    // Load the model that contains the delete function
     $this->load->model('modelinsert');
 
-    // Call the delete function
     $result = $this->modelinsert->delete_guru($student_id);
 
     if ($result) {
@@ -498,7 +490,6 @@ public function data_guru_hapus($student_id)
         $this->session->set_flashdata('error', 'Gagal menghapus data guru');
     }
 
-    // Redirect to the data_siswa page or any other page you prefer
     redirect('administrator/data_guru', 'refresh');
 }
 

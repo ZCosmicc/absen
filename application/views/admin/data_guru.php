@@ -25,7 +25,7 @@
     <section class="content">
       <div class="flash_success" data-flash_success="<?php echo $this->session->flashdata('success'); ?>"></div>
       <div class="flash_error" data-flash_error="<?php echo $this->session->flashdata('error'); ?>"></div>
-      <!-- Assuming $gurus is an array of objects -->
+
 <div class="container-fluid">
     <div class="card card-default">
         <div class="card-header">
