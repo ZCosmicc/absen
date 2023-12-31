@@ -258,6 +258,12 @@ class Administrator extends CI_Controller {
 			redirect('','refresh');
 		}
 
+		$role = $this->session->userdata('role');
+		if ($role !== 'admin') {
+			//$this->session->set_flashdata('error', 'Anda tidak memiliki izin untuk mengakses halaman ini.'); (telat)
+			redirect('administrator', 'refresh'); 
+		}
+
 		$data['kelas'] = $this->db->get('app_class')->result();
 
 		$this->load->view('admin/meta');
@@ -274,6 +280,11 @@ public function data_guru()
 		redirect('','refresh');
 	}
 
+	$role = $this->session->userdata('role');
+    if ($role !== 'admin') {
+        redirect('administrator', 'refresh'); 
+    }
+
 	$data['gurus'] = $this->db->get('app_absen_user')->result();
 
 	$this->load->view('admin/meta');
@@ -289,6 +300,11 @@ public function data_guru_tambah()
 	if (! $this->session->userdata('email')) {
 		redirect('','refresh');
 	}
+
+	$role = $this->session->userdata('role');
+    if ($role !== 'admin') {
+        redirect('administrator', 'refresh'); 
+    }
 
 	$data['gurus'] = $this->db->get('app_absen_user')->result();
 
@@ -307,6 +323,11 @@ public function data_guru_tambah()
 			redirect('','refresh');
 		}
 
+		$role = $this->session->userdata('role');
+		if ($role !== 'admin') {
+			redirect('administrator', 'refresh'); 
+		}
+
 		$data['kelas'] = $this->db->get('app_class')->result();
 
 		$this->load->view('admin/meta');
@@ -323,6 +344,11 @@ public function data_guru_tambah()
         redirect('', 'refresh');
     }
 
+	$role = $this->session->userdata('role');
+    if ($role !== 'admin') {
+        redirect('administrator', 'refresh'); 
+    }
+
     $data['siswa'] = $this->db->get_where('app_student', array('id_' => $student_id))->row();
 	$data['kelas'] = $this->db->get('app_class')->result();
     $this->load->view('admin/meta');
@@ -337,6 +363,12 @@ public function data_guru_tambah()
     if (!$this->session->userdata('email')) {
         redirect('', 'refresh');
     }
+
+	$role = $this->session->userdata('role');
+    if ($role !== 'admin') {
+        redirect('administrator', 'refresh'); 
+    }
+
 	$data['gurus'] = $this->db->get_where('app_absen_user', array('id_' => $student_id))->row();
     $this->load->view('admin/meta');
     $this->load->view('admin/header');
@@ -462,6 +494,11 @@ public function data_siswa_hapus($student_id)
         redirect('', 'refresh');
     }
 
+	$role = $this->session->userdata('role');
+    if ($role !== 'admin') {
+        redirect('administrator', 'refresh'); 
+    }
+
     $this->load->model('modelinsert');
 
     $result = $this->modelinsert->delete_siswa($student_id);
@@ -478,6 +515,11 @@ public function data_guru_hapus($student_id)
 {
     if (!$this->session->userdata('email')) {
         redirect('', 'refresh');
+    }
+
+	$role = $this->session->userdata('role');
+    if ($role !== 'admin') {
+        redirect('administrator', 'refresh'); 
     }
 
     $this->load->model('modelinsert');

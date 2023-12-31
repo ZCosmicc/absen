@@ -3,6 +3,7 @@ $segmen1 = $this->uri->segment(1);
 $segmen2 = $this->uri->segment(2);
 $segmen3 = $this->uri->segment(3);
 
+$role = $this->session->userdata('role');
  ?>
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
@@ -69,23 +70,26 @@ $segmen3 = $this->uri->segment(3);
             </ul>
           </li>
 
-          <li class="nav-item">
-            <a href="<?php echo site_url(); ?>administrator/data_siswa" class="nav-link <?php if ($segmen1 == 'administrator' && $segmen2 == 'data_siswa') {echo 'active';} ?>">
-              <i class="nav-icon fas fa-edit"></i>
-              <p>
-                Data Siswa
-              </p>
-            </a>
-          </li>
+          <?php if ($role === 'admin'): ?>
+              <li class="nav-item">
+                  <a href="<?php echo site_url(); ?>administrator/data_siswa" class="nav-link <?php if ($segmen1 == 'administrator' && $segmen2 == 'data_siswa') {echo 'active';} ?>">
+                      <i class="nav-icon fas fa-users"></i>
+                      <p>
+                          Data Siswa
+                      </p>
+                  </a>
+              </li>
 
-          <li class="nav-item">
-            <a href="<?php echo site_url(); ?>administrator/data_guru" class="nav-link <?php if ($segmen1 == 'administrator' && $segmen2 == 'data_guru') {echo 'active';} ?>">
-              <i class="nav-icon fas fa-edit"></i>
-              <p>
-                Data Guru
-              </p>
-            </a>
-          </li>
+              <li class="nav-item">
+                  <a href="<?php echo site_url(); ?>administrator/data_guru" class="nav-link <?php if ($segmen1 == 'administrator' && $segmen2 == 'data_guru') {echo 'active';} ?>">
+                      <i class="nav-icon fas fa-sitemap"></i>
+                      <p>
+                          Data Guru
+                      </p>
+                  </a>
+              </li>
+          <?php endif; ?>
+
 
            <li class="nav-item">
             <a href="<?php echo site_url(); ?>welcome/logout" class="nav-link">
