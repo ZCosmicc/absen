@@ -44,7 +44,9 @@
                   <select id="kelasb"  class="form-control select2" style="width: 100%;" required="">
                     <option value="">-- Pilih Kelas --</option>
                     <?php foreach ($kelas as $kelas): ?>
-                        <option value="<?php echo $kelas->cl_code ?>"><?php echo $kelas->cl_name ?></option>
+                      <?php if ($kelas->cl_teacher == $this->session->userdata('email')): ?>
+                          <option value="<?php echo $kelas->cl_code ?>"><?php echo $kelas->cl_name ?></option>
+                        <?php endif; ?>
                     <?php endforeach ?>
                   </select>
                 </div>
