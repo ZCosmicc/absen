@@ -43,11 +43,11 @@ class Welcome extends CI_Controller {
 				redirect('administrator','refresh');
 
 			} else {
-				$this->session->set_flashdata('error', 'Password Salah');
+				//$this->session->set_flashdata('error', 'Password Salah');
 				redirect('','refresh');
 			}
 		} else {
-			$this->session->set_flashdata('error', 'Email dan Password salah');
+			//$this->session->set_flashdata('error', 'Email dan Password salah');
 			redirect('','refresh');
 		}
 	}

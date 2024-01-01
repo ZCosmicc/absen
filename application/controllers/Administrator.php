@@ -106,10 +106,10 @@ class Administrator extends CI_Controller {
 
 		$insert = $this->modelinsert->absen($data);
 		if ($insert) {
-			$this->session->set_flashdata('success', 'Input data absen kelas '.$nama_kelas.' berhasil');
+			//$this->session->set_flashdata('success', 'Input data absen kelas '.$nama_kelas.' berhasil');
 			redirect('administrator/input','refresh');
 		} else {
-			$this->session->set_flashdata('error', 'Input data absen kelas '.$nama_kelas.' gagal');
+			//$this->session->set_flashdata('error', 'Input data absen kelas '.$nama_kelas.' gagal');
 			redirect('administrator/input','refresh');
 		}
 
@@ -404,10 +404,10 @@ public function data_guru_tambah()
 
     $insert = $this->modelinsert->siswa($data);
     if ($insert) {
-        $this->session->set_flashdata('success', 'Input data siswa '.$this->input->post('nama').' berhasil');
+        //$this->session->set_flashdata('success', 'Input data siswa '.$this->input->post('nama').' berhasil');
         redirect('administrator/data_siswa','refresh');
     } else {
-        $this->session->set_flashdata('error', 'Input data absen kelas '.$this->input->post('kelas').' gagal');
+        //$this->session->set_flashdata('error', 'Input data absen kelas '.$this->input->post('kelas').' gagal');
         redirect('administrator/data_siswa','refresh');
     }
 }
@@ -426,10 +426,10 @@ public function input_guru()
 
     $insert = $this->modelinsert->guru($data);
     if ($insert) {
-        $this->session->set_flashdata('success', 'Input data guru ' . $this->input->post('nama') . ' berhasil');
+        //$this->session->set_flashdata('success', 'Input data guru ' . $this->input->post('nama') . ' berhasil');
         redirect('administrator/data_guru', 'refresh');
     } else {
-        $this->session->set_flashdata('error', 'input data guru ' . $this->input->post('nama') . ' gagal');
+        //$this->session->set_flashdata('error', 'input data guru ' . $this->input->post('nama') . ' gagal');
         redirect('administrator/data_siswa', 'refresh');
     }
 }
@@ -459,10 +459,10 @@ public function edit_siswa()
     $update = $this->modelinsert->update_siswa($data, $id);
 
     if ($update) {
-        $this->session->set_flashdata('success', 'Update data siswa ' . $this->input->post('nama') . ' berhasil');
+        //$this->session->set_flashdata('success', 'Update data siswa ' . $this->input->post('nama') . ' berhasil');
         redirect('administrator/data_siswa', 'refresh');
     } else {
-        $this->session->set_flashdata('error', 'Update data siswa ' . $this->input->post('nama') . ' gagal');
+        //$this->session->set_flashdata('error', 'Update data siswa ' . $this->input->post('nama') . ' gagal');
         redirect('administrator/data_siswa', 'refresh');
     }
 }
@@ -481,10 +481,10 @@ public function edit_guru()
     $update = $this->modelinsert->update_guru($data, $id);
 
     if ($update) {
-        $this->session->set_flashdata('success', 'Update data guru ' . $this->input->post('nama') . ' berhasil');
+        //$this->session->set_flashdata('success', 'Update data guru ' . $this->input->post('nama') . ' berhasil');
         redirect('administrator/data_guru', 'refresh');
     } else {
-        $this->session->set_flashdata('error', 'Update data guru ' . $this->input->post('nama') . ' gagal');
+        //$this->session->set_flashdata('error', 'Update data guru ' . $this->input->post('nama') . ' gagal');
         redirect('administrator/data_guru', 'refresh');
     }
 }
@@ -504,9 +504,9 @@ public function data_siswa_hapus($student_id)
     $result = $this->modelinsert->delete_siswa($student_id);
 
     if ($result) {
-        $this->session->set_flashdata('success', 'Data siswa berhasil dihapus');
+        //$this->session->set_flashdata('success', 'Data siswa berhasil dihapus');
     } else {
-        $this->session->set_flashdata('error', 'Gagal menghapus data siswa');
+        //$this->session->set_flashdata('error', 'Gagal menghapus data siswa');
     }
 
     redirect('administrator/data_siswa', 'refresh');
@@ -527,9 +527,9 @@ public function data_guru_hapus($student_id)
     $result = $this->modelinsert->delete_guru($student_id);
 
     if ($result) {
-        $this->session->set_flashdata('success', 'Data guru berhasil dihapus');
+        //$this->session->set_flashdata('success', 'Data guru berhasil dihapus');
     } else {
-        $this->session->set_flashdata('error', 'Gagal menghapus data guru');
+        //$this->session->set_flashdata('error', 'Gagal menghapus data guru');
     }
 
     redirect('administrator/data_guru', 'refresh');
