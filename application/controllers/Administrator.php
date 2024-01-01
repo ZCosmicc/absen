@@ -19,20 +19,6 @@ class Administrator extends CI_Controller {
 		$email = $this->session->userdata('email');
     	$role = $this->session->userdata('role');
 		
-		//Perbaruan terbaik untuk menampilkan jumlah siswa yang sudah dipilah, tapi apa yang salah pada bagian foreachnya itu tidak diketahui 🤔
-		// $email = $this->session->userdata('email');
-		// $data['kelas'] = $this->db->get_where('app_class', ['cl_teacher' => $email])->result();
-
-		// $totalSiswa = 0;
-
-		// foreach ($data['kelas'] as $kelasItem) {
-		// 	$this->db->where('std_class_code', $kelasItem->class_code);
-		// 	$totalSiswa += $this->db->get('app_student')->num_rows();
-		// }
-
-		// $data['siswa'] = $totalSiswa;
-
-		//sementara tetap pakai ini
 		$data['siswa'] = $this->db->get('app_student')->num_rows();
 		
 		$data['sakit'] = $this->db->get_where('std_rekap_absen',['abs_ket' => '1'])->num_rows();
