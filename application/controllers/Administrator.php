@@ -455,8 +455,15 @@ public function edit_siswa()
 }
 public function edit_guru()
 {
+	// $password = $this->input->post('password');
+    // $hashed_password = password_hash($password, PASSWORD_BCRYPT);
 	$password = $this->input->post('password');
-    $hashed_password = password_hash($password, PASSWORD_BCRYPT);
+    if (substr($password, 0, 4) !== '$2y$') {
+        $hashed_password = password_hash($password, PASSWORD_BCRYPT);
+    } else {
+        $hashed_password = $password;
+    }
+
     $data = array(
         'id_' => '',
         'email' => $this->input->post('email'),

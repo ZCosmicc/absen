@@ -44,7 +44,7 @@
                                         <input type="text" class="form-control" id="nip" name="nip" pattern="[0-9]+" title="Masukkan hanya angka" value="<?php echo $gurus->nip; ?>" required>
                                     </div>
                                     <div class="form-group">
-                                        <label for="password">password:</label>
+                                        <label for="password">Password:</label>
                                         <input type="text" class="form-control" id="password" name="password" value="<?php echo $gurus->password; ?>" required>
                                     </div>
                                     <div class="form-group">
