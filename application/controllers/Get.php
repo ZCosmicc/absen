@@ -40,9 +40,6 @@ class Get extends CI_Controller {
                   <tr>
                     <td style="padding-right: 20px">Nama Kelas</td><td>:</td><td style="padding-left: 10px">';
         $data .= $kelas['cl_name'];
-
-        $data .= '<input type="hidden" name="abs_id[]" value="'.$siswa->abs_id.'">';
-
         $data .= '<input type="hidden" name="class_name" value="'.$kelas["cl_name"].'"> ';
         $data .= '<input type="hidden" name="class_code" value="'.$cl_code.'"> ';
 
