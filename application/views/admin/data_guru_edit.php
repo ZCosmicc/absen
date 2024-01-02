@@ -33,19 +33,26 @@
                                 <form action="<?php echo base_url() ?>administrator/edit_guru" method="post">
                                     <div class="form-group">
                                         <label for="email">email:</label>
-                                        <input type="text" class="form-control" id="email" name="email" value="<?php echo $gurus->email; ?>" required>
+                                        <input type="email" class="form-control" id="email" name="email" title="Masukkan hanya email" value="<?php echo $gurus->email; ?>" required>
                                     </div>
                                     <div class="form-group">
                                         <label for="name">name:</label>
                                         <input type="text" class="form-control" id="name" name="name" value="<?php echo $gurus->name; ?>" required>
                                     </div>
                                     <div class="form-group">
+                                        <label for="nip">NIP:</label>
+                                        <input type="text" class="form-control" id="nip" name="nip" pattern="[0-9]+" title="Masukkan hanya angka" value="<?php echo $gurus->nip; ?>" required>
+                                    </div>
+                                    <div class="form-group">
                                         <label for="password">password:</label>
                                         <input type="text" class="form-control" id="password" name="password" value="<?php echo $gurus->password; ?>" required>
                                     </div>
                                     <div class="form-group">
-                                        <label for="role">role:</label>
-                                        <input type="text" class="form-control" id="role" name="role" value="<?php echo $gurus->role; ?>" required>
+                                        <label for="role">Role:</label>
+                                        <select class="form-control" id="role" name="role" required>
+                                            <option value="guru" <?php echo ($gurus->role == 'guru') ? 'selected' : ''; ?>>Guru</option>
+                                            <option value="admin" <?php echo ($gurus->role == 'admin') ? 'selected' : ''; ?>>Admin</option>
+                                        </select>
                                     </div>
                                     <input type="hidden" id="id_" name="id_" value="<?php echo $gurus->id_; ?>">
                                     <button type="submit" class="btn btn-primary">Edit</button>

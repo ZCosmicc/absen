@@ -40,6 +40,7 @@
                                 <th>No</th>
                                 <th>Email</th>
                                 <th>Nama</th>
+                                <th>NIP</th>
                                 <th>Password</th>
                                 <th>Role</th>
                                 <th>Aksi</th>
@@ -53,6 +54,7 @@
                                 echo '<td>' . $no++ . '</td>';
                                 echo '<td>' . $guru->email . '</td>';
                                 echo '<td>' . $guru->name . '</td>';
+                                echo '<td>' . $guru->nip . '</td>';
                                 echo '<td>' . $guru->password . '</td>';
                                 echo '<td>' . $guru->role . '</td>';
                                 echo '<td>';

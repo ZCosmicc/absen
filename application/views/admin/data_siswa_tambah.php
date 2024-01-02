@@ -38,7 +38,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="nisn">NISN Siswa:</label>
-                                        <input type="text" class="form-control" id="nisn" name="nisn" required>
+                                        <input type="text" class="form-control" id="nisn" name="nisn" pattern="[0-9]+" title="Masukkan hanya angka" required>
                                     </div>
                                     <div class="form-group">
                                         <label for="kelas">Kelas:</label>
@@ -55,11 +55,11 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="hp">No HP:</label>
-                                        <input type="text" class="form-control" id="hp" name="hp" required>
+                                        <input type="text" class="form-control" id="hp" name="hp" pattern="[0-9]+" title="Masukkan hanya angka" required>
                                     </div>
                                     <div class="form-group">
                                         <label for="email">Email:</label>
-                                        <input type="text" class="form-control" id="email" name="email" required>
+                                        <input type="email" class="form-control" id="email" name="email" title="Masukkan hanya email" required>
                                     </div>
 
                                     <button type="submit" class="btn btn-primary">Tambah Siswa</button>

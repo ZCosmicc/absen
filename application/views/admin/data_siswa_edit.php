@@ -37,29 +37,28 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="nisn">NISN Siswa:</label>
-                                        <input type="text" class="form-control" id="nisn" name="nisn" value="<?php echo $siswa->std_nisn; ?>" required>
+                                        <input type="text" class="form-control" id="nisn" name="nisn" pattern="[0-9]+" title="Masukkan hanya angka" value="<?php echo $siswa->std_nisn; ?>" required>
                                     </div>
                                     <div class="form-group">
-    <label for="kelas">Kelas:</label>
-    <select id="kelas" class="form-control" name="kelas" required>
-        <option value="">-- Pilih Kelas --</option>
-        <?php foreach ($kelas as $kelas_item): ?>
-            <option value="<?php echo $kelas_item->cl_code ?>" <?php echo ($siswa->std_class_code == $kelas_item->cl_code) ? 'selected' : ''; ?>><?php echo $kelas_item->cl_name ?></option>
-        <?php endforeach ?>
-    </select>
-</div>
-
+                                        <label for="kelas">Kelas:</label>
+                                        <select id="kelas" class="form-control" name="kelas" required>
+                                            <option value="">-- Pilih Kelas --</option>
+                                            <?php foreach ($kelas as $kelas_item): ?>
+                                                <option value="<?php echo $kelas_item->cl_code ?>" <?php echo ($siswa->std_class_code == $kelas_item->cl_code) ? 'selected' : ''; ?>><?php echo $kelas_item->cl_name ?></option>
+                                            <?php endforeach ?>
+                                        </select>
+                                    </div>
                                     <div class="form-group">
                                         <label for="alamat">Alamat:</label>
                                         <input type="text" class="form-control" id="alamat" name="alamat" value="<?php echo $siswa->std_address; ?>" required>
                                     </div>
                                     <div class="form-group">
                                         <label for="hp">No HP:</label>
-                                        <input type="text" class="form-control" id="hp" name="hp" value="<?php echo $siswa->std_hp; ?>" required>
+                                        <input type="text" class="form-control" id="hp" name="hp" pattern="[0-9]+" title="Masukkan hanya angka" value="<?php echo $siswa->std_hp; ?>" required>
                                     </div>
                                     <div class="form-group">
                                         <label for="email">Email:</label>
-                                        <input type="text" class="form-control" id="email" name="email" value="<?php echo $siswa->std_email; ?>" required>
+                                        <input type="email" class="form-control" id="email" name="email" title="Masukkan hanya email" value="<?php echo $siswa->std_email; ?>" required>
                                     </div>
                                     <input type="hidden" id="id_" name="id_" value="<?php echo $siswa->id_; ?>">
                                     <button type="submit" class="btn btn-primary">Edit</button>

@@ -34,20 +34,28 @@
                                 <form action="<?php echo base_url() ?>administrator/input_guru" method="post">
                                     <div class="form-group">
                                         <label for="email">Email:</label>
-                                        <input type="text" class="form-control" id="email" name="email" required>
+                                        <input type="email" class="form-control" id="email" name="email" title="Masukkan hanya email" required>
                                     </div>
                                     <div class="form-group">
                                         <label for="name">name:</label>
                                         <input type="text" class="form-control" id="name" name="name" required>
                                     </div>
                                     <div class="form-group">
+                                        <label for="nip">NIP:</label>
+                                        <input type="text" class="form-control" id="nip" name="nip" pattern="[0-9]+" title="Masukkan hanya angka" required>
+                                    </div>
+                                    <div class="form-group">
                                         <label for="password">Password:</label>
                                         <input type="password" class="form-control" id="password" name="password" required>
                                     </div>
                                     <div class="form-group">
-                                        <label for="role">role:</label>
-                                        <input type="text" class="form-control" id="role" name="role" required>
+                                        <label for="role">Role:</label>
+                                        <select class="form-control" id="role" name="role" required>
+                                            <option value="guru" selected>Guru</option>
+                                            <option value="admin">Admin</option>
+                                        </select>
                                     </div>
+
 
                                     <button type="submit" class="btn btn-primary">Tambah guru</button>
                                 </form>

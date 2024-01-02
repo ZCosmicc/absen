@@ -406,6 +406,7 @@ public function input_guru()
         'id_' => '',
         'email' => $this->input->post('email'),
         'name' => $this->input->post('name'),
+		'nip' => $this->input->post('nip'),
         'password' => $hashed_password,
         'role' => $this->input->post('role')
     );
@@ -460,6 +461,7 @@ public function edit_guru()
         'id_' => '',
         'email' => $this->input->post('email'),
         'name' => $this->input->post('name'),
+		'nip' => $this->input->post('nip'),
         'password' => $hashed_password,
         'role' => $this->input->post('role')
     );

@@ -40,6 +40,9 @@ class Get extends CI_Controller {
                   <tr>
                     <td style="padding-right: 20px">Nama Kelas</td><td>:</td><td style="padding-left: 10px">';
         $data .= $kelas['cl_name'];
+
+        $data .= '<input type="hidden" name="abs_id[]" value="'.$siswa->abs_id.'">';
+
         $data .= '<input type="hidden" name="class_name" value="'.$kelas["cl_name"].'"> ';
         $data .= '<input type="hidden" name="class_code" value="'.$cl_code.'"> ';
 
@@ -182,6 +185,7 @@ class Get extends CI_Controller {
                       <th>No</th>
                       <th>Email</th>
                       <th>Nama</th>
+                      <th>NIP</th>
                       <th>Password</th>
                       <th>Role</th>
                       <th>Aksi</th>
@@ -194,6 +198,7 @@ class Get extends CI_Controller {
         $data .= '<td>' . $no++ . '</td>';
         $data .= '<td>' . $guru->email . '</td><td>';
         $data .= $guru->name . '</td><td>';
+        $data .= $guru->nip . '</td><td>';
         $data .= $guru->password . '</td><td>';
         $data .= $guru->role . '</td><td>';
         $data .= '<a href="' . base_url('administrator/data_guru_edit/' . $guru->id_) . '" class="btn btn-success float-left">Edit</a>';
