@@ -281,6 +281,27 @@ public function data_guru()
 	$this->load->view('admin/script');
 }
 
+public function data_kelas()
+{
+	if (! $this->session->userdata('email')) {
+		redirect('','refresh');
+	}
+
+	$role = $this->session->userdata('role');
+    if ($role !== 'admin') {
+        redirect('administrator', 'refresh'); 
+    }
+
+	$data['klass'] = $this->db->get('app_class')->result();
+
+	$this->load->view('admin/meta');
+	$this->load->view('admin/header');
+	$this->load->view('admin/sidebar');
+	$this->load->view('admin/data_kelas', $data);
+	$this->load->view('admin/footer');
+	$this->load->view('admin/script');
+}
+
 public function data_guru_tambah()
 {
 	if (! $this->session->userdata('email')) {
@@ -364,7 +385,29 @@ public function data_guru_tambah()
     $this->load->view('admin/script');
 }
 
-	
+public function data_kelas_edit($student_id)
+{
+    if (!$this->session->userdata('email')) {
+        redirect('', 'refresh');
+    }
+
+	$role = $this->session->userdata('role');
+    if ($role !== 'admin') {
+        redirect('administrator', 'refresh'); 
+    }
+
+	$this->db->where('role', 'guru');
+    $data['all_teachers'] = $this->db->get('app_absen_user')->result();
+
+	$data['klass'] = $this->db->get_where('app_class', array('id_' => $student_id))->row();
+
+    $this->load->view('admin/meta');
+    $this->load->view('admin/header');
+    $this->load->view('admin/sidebar');
+    $this->load->view('admin/data_kelas_edit', $data);
+    $this->load->view('admin/footer');
+    $this->load->view('admin/script');
+}
 
 	public function input_siswa()
 {
@@ -481,6 +524,28 @@ public function edit_guru()
     } else {
         //$this->session->set_flashdata('error', 'Update data guru ' . $this->input->post('nama') . ' gagal');
         redirect('administrator/data_guru', 'refresh');
+    }
+}
+public function edit_kelas()
+{
+	$class_info = $this->db->get_where('app_class', ['cl_name' => $this->input->post('name')])->row_array();
+    $data = array(
+        'id_' => '',
+		'cl_code' => $class_info['cl_code'],
+        'cl_name' => $this->input->post('name'),
+		'cl_grade' => $class_info['cl_grade'],
+        'cl_teacher' => $this->input->post('guru'),
+
+    );
+    $id = $this->input->post('id_');
+    $update = $this->modelinsert->update_kelas($data, $id);
+
+    if ($update) {
+        //$this->session->set_flashdata('success', 'Update data siswa ' . $this->input->post('nama') . ' berhasil');
+        redirect('administrator/data_kelas', 'refresh');
+    } else {
+        //$this->session->set_flashdata('error', 'Update data siswa ' . $this->input->post('nama') . ' gagal');
+        redirect('administrator/data_kelas', 'refresh');
     }
 }
 public function data_siswa_hapus($student_id)

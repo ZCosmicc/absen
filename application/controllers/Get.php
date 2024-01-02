@@ -98,7 +98,6 @@ class Get extends CI_Controller {
 		$cl_code = $_POST['cl_code'];
 
 		$kelas = $this->db->get_where('app_class', ['cl_code' => $cl_code])->row_array();
-    //$kelas = $this->db->get_where('app_class', ['cl_teacher' => $email])->row_array(); (?)
 		$siswa = $this->db->get_where('app_student', ['std_class_code' => $cl_code])->result();
 
 		$data = '';
@@ -207,10 +206,49 @@ class Get extends CI_Controller {
         $data .= '</tr>';
     }
 
-    $data .= '</tbody></table>';
-    $data .= '</div></div></div></div>';
-    echo $data;
-}
+      $data .= '</tbody></table>';
+      $data .= '</div></div></div></div>';
+      echo $data;
+  }
+
+  public function datakelas()
+  {
+      $klass = $this->db->get_where('app_class', ['cl_code' => $cl_code])->result();
+
+      $data = '';
+      $data .= '<div class="card-header"><h3 class="card-title">Data Kelas</h3></div><div class="card-body">
+              <div class="row">
+                <div class="col-md-12">
+                  <table>
+                    <tr>';
+      $data .= '</tr>
+                  </table>
+                  <br>
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th>No</th>
+                        <th>Kelas</th>
+                        <th>Guru</th>
+                        <th>Aksi</th>
+                      </tr>
+                    </thead>
+                    <tbody>';
+      $no = 1;
+      foreach ($klass as $klas) {
+          $data .= '<tr>';
+          $data .= '<td>' . $no++ . '</td>';
+          $data .= '<td>' . $guru->cl_name . '</td><td>';
+          $data .= $guru->cl_teacher . '</td><td>';
+          $data .= '<a href="' . base_url('administrator/data_kelas_edit/' . $klas->id_) . '" class="btn btn-success float-left">Edit</a>';
+          $data .= '</td>';
+          $data .= '</tr>';
+      }
+
+      $data .= '</tbody></table>';
+      $data .= '</div></div></div></div>';
+      echo $data;
+  }
 
 public function data_hari()
 {

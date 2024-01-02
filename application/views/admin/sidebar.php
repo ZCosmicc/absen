@@ -83,6 +83,15 @@ $role = $this->session->userdata('role');
               </li>
 
               <li class="nav-item">
+                  <a href="<?php echo site_url(); ?>administrator/data_kelas" class="nav-link <?php if ($segmen1 == 'administrator' && $segmen2 == 'data_kelas') {echo 'active';} ?>">
+                      <i class="nav-icon fas fa-trophy"></i>
+                      <p>
+                          Data Kelas
+                      </p>
+                  </a>
+              </li>
+
+              <li class="nav-item">
                   <a href="<?php echo site_url(); ?>administrator/data_guru" class="nav-link <?php if ($segmen1 == 'administrator' && $segmen2 == 'data_guru') {echo 'active';} ?>">
                       <i class="nav-icon fas fa-sitemap"></i>
                       <p>
