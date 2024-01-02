@@ -225,12 +225,13 @@ public function data_hari()
     $data .= '<tr><td>Tanggal</td><td>:</td><td>'.$tg.'</td></tr></table>';
     $data .= '</div></div></div>';
 
-    $data .= '<hr><table border="all" style="border-collapse: collapse; width:100%" class="table table-hover table-bordered"><thead><tr><th width="40px">No</th><th>Nama</th><th width="100px" style="text-align: center;">Sakit</th><th width="100px" style="text-align: center;">Ijin</th><th width="100px" style="text-align: center;">Tanpa Ket</th></tr></thead>';
+    $data .= '<hr><table border="all" style="border-collapse: collapse; width:100%" class="table table-hover table-bordered"><thead><tr><th width="40px">No</th><th>Nama</th><th>NISN</th><th width="100px" style="text-align: center;">Sakit</th><th width="100px" style="text-align: center;">Ijin</th><th width="100px" style="text-align: center;">Tanpa Ket</th></tr></thead>';
     $data .= '<tbody>';
     foreach ($siswa as $siswa) {
         $data .= '<tr>';
         $data .= '<td style="text-align: right; padding-right: 5px;">'.$no++.'</td>';
         $data .= '<td nowrap>'.$siswa->std_name.'</td>';
+        $data .= '<td nowrap>'.$siswa->std_nisn.'</td>';
 
         $this->db->where('abs_nisn', $siswa->std_nisn);
         $this->db->where('abs_date', $tg);
@@ -284,12 +285,14 @@ public function data_hari()
     $data .= '<tr><td>Bulan</td><td>:</td><td>'.$bulan.'</td></tr></table>';
     $data .= '</div></div></div>';
 
-    $data .= '<hr><table border="all" style="border-collapse: collapse; width:100%" class="table table-hover table-bordered"><thead><tr><th width="40px">No</th><th>Nama</th><th width="100px" style="text-align: center;">Sakit</th><th width="100px" style="text-align: center;">Ijin</th><th width="100px" style="text-align: center;">Tanpa Ket</th></tr></thead>';
+    $data .= '<hr><table border="all" style="border-collapse: collapse; width:100%" class="table table-hover table-bordered"><thead><tr><th width="40px">No</th><th>Nama</th><th>NISN</th><th width="100px" style="text-align: center;">Sakit</th><th width="100px" style="text-align: center;">Ijin</th><th width="100px" style="text-align: center;">Tanpa Ket</th></tr></thead>';
     $data .= '<tbody>';
     foreach ($siswa as $siswa) {
       $data .= '<tr>';
       $data .= '<td style="text-align: right; padding-right: 5px;">'.$no++.'</td>';
       $data .= '<td nowrap>'.$siswa->std_name.'</td>';
+      $data .= '<td nowrap>'.$siswa->std_nisn.'</td>';
+      
       
       $this->db->where('abs_nisn', $siswa->std_nisn);
       $this->db->where('abs_ket', '1');
@@ -337,12 +340,13 @@ public function data_hari()
     $data .= '<tr><td>Semester</td><td>:</td><td>'.$sem.'</td></tr></table>';
     $data .= '</div></div></div>';
 
-    $data .= '<hr><table border="all" style="border-collapse: collapse; width:100%" class="table table-hover table-bordered"><thead><tr><th width="40px">No</th><th>Nama</th><th width="100px" style="text-align: center;">Sakit</th><th width="100px" style="text-align: center;">Ijin</th><th width="100px" style="text-align: center;">Tanpa Ket</th></tr></thead>';
+    $data .= '<hr><table border="all" style="border-collapse: collapse; width:100%" class="table table-hover table-bordered"><thead><tr><th width="40px">No</th><th>Nama</th><th>NISN</th><th width="100px" style="text-align: center;">Sakit</th><th width="100px" style="text-align: center;">Ijin</th><th width="100px" style="text-align: center;">Tanpa Ket</th></tr></thead>';
     $data .= '<tbody>';
     foreach ($siswa as $siswa) {
       $data .= '<tr>';
       $data .= '<td style="text-align: right; padding-right: 5px;">'.$no++.'</td>';
       $data .= '<td nowrap>'.$siswa->std_name.'</td>';
+      $data .= '<td nowrap>'.$siswa->std_nisn.'</td>';
       
       $this->db->where('abs_nisn', $siswa->std_nisn);
       $this->db->where('abs_ket', '1');

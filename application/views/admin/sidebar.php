@@ -30,6 +30,7 @@ $role = $this->session->userdata('role');
             </a>
           </li>
 
+          <?php if ($role === 'guru'): ?>
            <li class="nav-item">
             <a href="<?php echo site_url(); ?>administrator/input" class="nav-link <?php if ($segmen1 == 'administrator' && $segmen2 == 'input') {echo 'active';} ?>">
               <i class="nav-icon fas fa-edit"></i>
@@ -38,6 +39,7 @@ $role = $this->session->userdata('role');
               </p>
             </a>
           </li>
+          <?php endif; ?>
 
          
           <li class="nav-item has-treeview <?php if ($segmen1 == 'administrator' && $segmen2 == 'cetak_harian' || $segmen2 == 'cetak_bulan' || $segmen2 == 'cetak_semester') {echo 'menu-open';} ?> ">
