@@ -57,8 +57,6 @@ class Modelinsert extends CI_Model {
 function update_siswa($data, $id)
 {
     try {
-        unset($data['id_']);
-        
         $this->db->where('id_', $id);
         $this->db->update('app_student', $data);
 

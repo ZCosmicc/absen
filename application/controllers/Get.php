@@ -238,8 +238,8 @@ class Get extends CI_Controller {
       foreach ($klass as $klas) {
           $data .= '<tr>';
           $data .= '<td>' . $no++ . '</td>';
-          $data .= '<td>' . $guru->cl_name . '</td><td>';
-          $data .= $guru->cl_teacher . '</td><td>';
+          $data .= '<td>' . $klas->cl_name . '</td><td>';
+          $data .= $klas->cl_teacher . '</td><td>';
           $data .= '<a href="' . base_url('administrator/data_kelas_edit/' . $klas->id_) . '" class="btn btn-success float-left">Edit</a>';
           $data .= '</td>';
           $data .= '</tr>';
