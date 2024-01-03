@@ -422,6 +422,31 @@ public function data_kelas_edit($student_id)
     $this->load->view('admin/script');
 }
 
+public function data_sem_edit($student_id)
+{
+    if (!$this->session->userdata('email')) {
+        redirect('', 'refresh');
+    }
+
+	$role = $this->session->userdata('role');
+    if ($role !== 'admin') {
+        redirect('administrator', 'refresh'); 
+    }
+
+    $data['all_tp'] = $this->db->get('app_tp')->result();
+	$data['all_semester'] = $this->db->get('app_semester')->result();
+
+	// $this->db->where('id_', '1');
+	$data['allschool'] = $this->db->get_where('app_school', array('id_' => $student_id))->row();
+
+    $this->load->view('admin/meta');
+    $this->load->view('admin/header');
+    $this->load->view('admin/sidebar');
+    $this->load->view('admin/data_sem_edit', $data);
+    $this->load->view('admin/footer');
+    $this->load->view('admin/script');
+}
+
 	public function input_siswa()
 {
     $class_info = $this->db->get_where('app_class', ['cl_code' => $this->input->post('kelas')])->row_array();
@@ -559,6 +584,34 @@ public function edit_kelas()
     } else {
         //$this->session->set_flashdata('error', 'Update data siswa ' . $this->input->post('nama') . ' gagal');
         redirect('administrator/data_kelas', 'refresh');
+    }
+}
+public function edit_sem()
+{
+	$sem_info = $this->db->get_where('app_school', ['id_' => $this->input->post('id_')])->row_array();
+    $data = array(
+        'id_' => '',
+		'npsn' => $sem_info['npsn'],
+		'sch_name' => $sem_info['sch_name'],
+		'sch_address' => $sem_info['sch_address'],
+		'sch_tlp' => $sem_info['sch_tlp'],
+		'sch_email' => $sem_info['sch_email'],
+		'sch_web' => $sem_info['sch_web'],
+		'sch_logo' => $sem_info['sch_logo'],
+		'sch_about' => $sem_info['sch_about'],
+        'sch_tp' => $this->input->post('tp'),
+        'sch_semester' => $this->input->post('semester'),
+
+    );
+    $id = $this->input->post('id_');
+    $update = $this->modelinsert->update_sem($data, $id);
+
+    if ($update) {
+        //$this->session->set_flashdata('success', 'Update data semester berhasil');
+        redirect('administrator', 'refresh');
+    } else {
+        //$this->session->set_flashdata('error', 'Update data semester gagal');
+        redirect('administrator', 'refresh');
     }
 }
 public function data_siswa_hapus($student_id)

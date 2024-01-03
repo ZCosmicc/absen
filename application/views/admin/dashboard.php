@@ -34,6 +34,11 @@
                   <i class="fas fa-chart-pie mr-1"></i>
                   Status peserta didik pada semester <?php echo $sekolah['sch_semester'] ?> Tahun Pelajaran <?php echo $sekolah['sch_tp']; ?>
                 </h3>
+                <div class="col-md-12">
+                <a href="<?php echo base_url('administrator/data_sem_edit/' . $sekolah['id_']); ?>" class="btn btn-success float-right">
+                    Edit
+                </a>
+                </div>
               
               </div><!-- /.card-header -->
               <div class="card-body">

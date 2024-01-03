@@ -98,6 +98,21 @@ function update_kelas($data, $id)
         return FALSE;
     }
 }
+function update_sem($data, $id)
+{
+    try {
+        unset($data['id_']);
+        
+        $this->db->where('id_', $id);
+        $this->db->update('app_school', $data);
+
+        return $this->db->affected_rows() > 0;
+    } catch (Exception $e) {
+
+        log_message('error', $e->getMessage());
+        return FALSE;
+    }
+}
 function delete_siswa($student_id)
 {
     try {
