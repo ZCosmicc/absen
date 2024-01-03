@@ -300,7 +300,6 @@ public function data_hari()
 }
 
 
-
   public function data_bulan()
   {
     $cl_code = $_POST['cl_codeb'];
