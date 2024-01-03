@@ -62,10 +62,10 @@
 				{
 					$('#datakelas').html(data);
 				},
-				error:function()
-				{
-					alert('error');
-				}
+				// error:function()
+				// {
+				// 	alert('error- wait, wtf');
+				// }
 			})
 		});
 	});
@@ -85,8 +85,7 @@
 				{
 					console.log(data);
 					$('#datakelasb').html(data);
-				},
-				
+				},				
 			})
 		});
 	});
