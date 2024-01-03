@@ -33,7 +33,7 @@
                                 <form action="<?php echo base_url() ?>administrator/edit_guru" method="post">
                                     <div class="form-group">
                                         <label for="email">email:</label>
-                                        <input type="email" class="form-control" id="email" name="email" title="Masukkan hanya email" value="<?php echo $gurus->email; ?>" required>
+                                        <input type="email" class="form-control" id="email" name="email" title="Masukkan hanya email" pattern=".+\.com$" value="<?php echo $gurus->email; ?>" required>
                                     </div>
                                     <div class="form-group">
                                         <label for="name">name:</label>

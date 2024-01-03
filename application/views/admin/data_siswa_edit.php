@@ -58,7 +58,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="email">Email:</label>
-                                        <input type="email" class="form-control" id="email" name="email" title="Masukkan hanya email" value="<?php echo $siswa->std_email; ?>" required>
+                                        <input type="email" class="form-control" id="email" name="email" title="Masukkan hanya email" pattern=".+\.com$" value="<?php echo $siswa->std_email; ?>" required>
                                     </div>
                                     <input type="hidden" id="id_" name="id_" value="<?php echo $siswa->id_; ?>">
                                     <button type="submit" class="btn btn-primary">Edit</button>
