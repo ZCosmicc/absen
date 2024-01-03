@@ -2,10 +2,10 @@
 -- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1:3306
--- Generation Time: Dec 31, 2023 at 08:04 AM
--- Server version: 8.0.31
--- PHP Version: 8.0.26
+-- Host: 127.0.0.1
+-- Generation Time: Jan 03, 2024 at 08:40 AM
+-- Server version: 10.4.24-MariaDB
+-- PHP Version: 8.0.19
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -27,27 +27,24 @@ SET time_zone = "+00:00";
 -- Table structure for table `app_absen_user`
 --
 
-DROP TABLE IF EXISTS `app_absen_user`;
-CREATE TABLE IF NOT EXISTS `app_absen_user` (
-  `id_` int NOT NULL AUTO_INCREMENT,
+CREATE TABLE `app_absen_user` (
+  `id_` int(11) NOT NULL,
   `email` varchar(50) NOT NULL,
   `name` varchar(100) NOT NULL,
+  `nip` varchar(20) NOT NULL,
   `password` varchar(225) NOT NULL,
   `role` varchar(10) NOT NULL,
-  `session` varchar(100) NOT NULL,
-  PRIMARY KEY (`id_`),
-  KEY `email` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `session` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `app_absen_user`
 --
 
-INSERT INTO `app_absen_user` (`id_`, `email`, `name`, `password`, `role`, `session`) VALUES
-(0, 'admin1@tes.com', 'tes1', '$2y$10$C4k4RPjL.rRQILKQaEgj1eVllsczZyiSSS0pJ1UVeeYkOV9hxQE8S', 'tes1', ''),
-(1, 'admin@adminabsen.com', 'admin1', '$2a$12$bM19hiVd7zztvy4nHAcguemav9D/d46aJCaVgZvuW7sybSs886Y1C', 'admin', ''),
-(2, 'guru1@gmail.com', 'Guru 1', '$2a$12$nTlciY5318pvL5l9ZaAGBuIx.HKl4WyE4nLhZWW/j0lw/SsKI/YK6', 'guru', ''),
-(3, 'guru2@gmail.com', 'Guru 2', '$2a$12$klqqQBB7bWQpcyHAFW8oIOjC6P1TdzAFI6.jx0Hnr4nnSyMOSCAsK', 'guru', '');
+INSERT INTO `app_absen_user` (`id_`, `email`, `name`, `nip`, `password`, `role`, `session`) VALUES
+(5, 'admin@gmail.com', 'admin', '0', '$2y$10$nqHl00BeXraGAFAKHbKsZuiY/sudctjZaPtuNntqmiN7nihG1woMq', 'admin', ''),
+(8, 'budi@gmail.com', 'budi handi', '0002', '$2y$10$lbEhXAC5E/nb6t4/5l9.g.chJqyO.22IU7NaB3kua7lKFkb8.lb1.', 'guru', ''),
+(9, 'andi@gmail.com', 'Andi Ahmad', '0001', '$2y$10$YErQ4DPQY3xwby5QJPSiauErxL2C2NtMr9TZ6YgSZqeWq2qdm2STe', 'guru', '');
 
 -- --------------------------------------------------------
 
@@ -55,27 +52,23 @@ INSERT INTO `app_absen_user` (`id_`, `email`, `name`, `password`, `role`, `sessi
 -- Table structure for table `app_class`
 --
 
-DROP TABLE IF EXISTS `app_class`;
-CREATE TABLE IF NOT EXISTS `app_class` (
-  `id_` int NOT NULL AUTO_INCREMENT,
+CREATE TABLE `app_class` (
+  `id_` int(11) NOT NULL,
   `cl_code` varchar(30) NOT NULL,
   `cl_name` varchar(50) NOT NULL,
   `cl_grade` varchar(4) NOT NULL,
-  `cl_teacher` varchar(50) NOT NULL,
-  PRIMARY KEY (`id_`),
-  KEY `cl_teacher` (`cl_teacher`),
-  KEY `cl_code` (`cl_code`)
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `cl_teacher` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `app_class`
 --
 
 INSERT INTO `app_class` (`id_`, `cl_code`, `cl_name`, `cl_grade`, `cl_teacher`) VALUES
-(1, '7-A', '7A', '7', 'guru1@gmail.com'),
-(2, '7-B', '7B', '7', 'guru1@gmail.com'),
-(3, '7-C', '7C', '7', 'guru2@gmail.com'),
-(4, '8-A', '8A', '8', 'guru1@gmail.com');
+(1, '7-A', '7A', '7', 'andi@gmail.com'),
+(2, '7-B', '7B', '7', 'budi@gmail.com'),
+(3, '7-C', '7C', '7', 'andi@gmail.com'),
+(4, '8-A', '8A', '8', 'budi@gmail.com');
 
 -- --------------------------------------------------------
 
@@ -83,13 +76,11 @@ INSERT INTO `app_class` (`id_`, `cl_code`, `cl_name`, `cl_grade`, `cl_teacher`) 
 -- Table structure for table `app_month`
 --
 
-DROP TABLE IF EXISTS `app_month`;
-CREATE TABLE IF NOT EXISTS `app_month` (
-  `id_` int NOT NULL AUTO_INCREMENT,
+CREATE TABLE `app_month` (
+  `id_` int(11) NOT NULL,
   `m_code` varchar(2) NOT NULL,
-  `m_name` varchar(20) NOT NULL,
-  PRIMARY KEY (`id_`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `m_name` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `app_month`
@@ -115,9 +106,8 @@ INSERT INTO `app_month` (`id_`, `m_code`, `m_name`) VALUES
 -- Table structure for table `app_school`
 --
 
-DROP TABLE IF EXISTS `app_school`;
-CREATE TABLE IF NOT EXISTS `app_school` (
-  `id_` int NOT NULL AUTO_INCREMENT,
+CREATE TABLE `app_school` (
+  `id_` int(11) NOT NULL,
   `npsn` varchar(8) NOT NULL,
   `sch_name` varchar(50) NOT NULL,
   `sch_address` text NOT NULL,
@@ -127,9 +117,8 @@ CREATE TABLE IF NOT EXISTS `app_school` (
   `sch_logo` varchar(50) NOT NULL,
   `sch_about` text NOT NULL,
   `sch_tp` varchar(20) NOT NULL,
-  `sch_semester` varchar(10) NOT NULL,
-  PRIMARY KEY (`id_`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `sch_semester` varchar(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `app_school`
@@ -144,12 +133,10 @@ INSERT INTO `app_school` (`id_`, `npsn`, `sch_name`, `sch_address`, `sch_tlp`, `
 -- Table structure for table `app_semester`
 --
 
-DROP TABLE IF EXISTS `app_semester`;
-CREATE TABLE IF NOT EXISTS `app_semester` (
-  `id_` int NOT NULL AUTO_INCREMENT,
-  `sem_name` varchar(10) NOT NULL,
-  PRIMARY KEY (`id_`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+CREATE TABLE `app_semester` (
+  `id_` int(11) NOT NULL,
+  `sem_name` varchar(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `app_semester`
@@ -165,35 +152,33 @@ INSERT INTO `app_semester` (`id_`, `sem_name`) VALUES
 -- Table structure for table `app_student`
 --
 
-DROP TABLE IF EXISTS `app_student`;
-CREATE TABLE IF NOT EXISTS `app_student` (
-  `id_` int UNSIGNED NOT NULL AUTO_INCREMENT,
-  `std_name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `std_nisn` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `std_class_code` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `std_class_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `std_grade` varchar(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `std_major` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `std_address` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `std_hp` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `std_email` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `std_activity` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `std_sick` varchar(3) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `std_ijin` varchar(3) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `std_absen` varchar(3) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `std_status` enum('0','1','2') CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  PRIMARY KEY (`id_`),
-  KEY `std_class_code` (`std_class_code`)
-) ENGINE=InnoDB AUTO_INCREMENT=685 DEFAULT CHARSET=utf8mb3;
+CREATE TABLE `app_student` (
+  `id_` int(9) UNSIGNED NOT NULL,
+  `std_name` varchar(100) CHARACTER SET utf8mb4 NOT NULL,
+  `std_nisn` varchar(15) CHARACTER SET utf8mb4 NOT NULL,
+  `std_class_code` varchar(30) CHARACTER SET utf8mb4 NOT NULL,
+  `std_class_name` varchar(50) CHARACTER SET utf8mb4 NOT NULL,
+  `std_grade` varchar(2) CHARACTER SET utf8mb4 NOT NULL,
+  `std_major` varchar(30) CHARACTER SET utf8mb4 NOT NULL,
+  `std_address` text CHARACTER SET utf8mb4 NOT NULL,
+  `std_hp` varchar(15) CHARACTER SET utf8mb4 NOT NULL,
+  `std_email` varchar(50) CHARACTER SET utf8mb4 NOT NULL,
+  `std_activity` varchar(100) CHARACTER SET utf8mb4 NOT NULL,
+  `std_sick` varchar(3) CHARACTER SET utf8mb4 NOT NULL,
+  `std_ijin` varchar(3) CHARACTER SET utf8mb4 NOT NULL,
+  `std_absen` varchar(3) CHARACTER SET utf8mb4 NOT NULL,
+  `std_status` enum('0','1','2') CHARACTER SET utf8mb4 NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `app_student`
 --
 
 INSERT INTO `app_student` (`id_`, `std_name`, `std_nisn`, `std_class_code`, `std_class_name`, `std_grade`, `std_major`, `std_address`, `std_hp`, `std_email`, `std_activity`, `std_sick`, `std_ijin`, `std_absen`, `std_status`) VALUES
-(679, 'tes', 'tes', '7-A', '7A', '7', 'tes', 'tes', 'tes', 'tes', '', '', '', '', '1'),
-(683, 'tes', 'tes', '7-A', '7A', '7', '-', 'tes', 'tes', 'tes', '-', '-', '-', '-', '1'),
-(684, 'tes', 'tes', '7-A', '7A', '7', '-', 'tes', 'tes', 'tes', '-', '-', '-', '-', '1');
+(693, 'Ahmad', '0001', '7-A', '7A', '7', '-', 'tes', '123', 'tes@tes', '-', '-', '-', '-', '1'),
+(694, 'Andi', '0002', '7-A', '7A', '7', '-', 'tes', '123', 'tes@tes', '-', '-', '-', '-', '1'),
+(695, 'Budi', '0003', '7-B', '7B', '7', '-', 'tes', '123', 'tes@tes', '-', '-', '-', '-', '1'),
+(696, 'Bedu', '0004', '7-B', '7B', '7', '-', 'tes', '123', 'tes@tes', '-', '-', '-', '-', '1');
 
 -- --------------------------------------------------------
 
@@ -201,12 +186,10 @@ INSERT INTO `app_student` (`id_`, `std_name`, `std_nisn`, `std_class_code`, `std
 -- Table structure for table `app_tp`
 --
 
-DROP TABLE IF EXISTS `app_tp`;
-CREATE TABLE IF NOT EXISTS `app_tp` (
-  `id_` int NOT NULL AUTO_INCREMENT,
-  `tp_name` varchar(20) NOT NULL,
-  PRIMARY KEY (`id_`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+CREATE TABLE `app_tp` (
+  `id_` int(11) NOT NULL,
+  `tp_name` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `app_tp`
@@ -224,9 +207,8 @@ INSERT INTO `app_tp` (`id_`, `tp_name`) VALUES
 -- Table structure for table `std_absen`
 --
 
-DROP TABLE IF EXISTS `std_absen`;
-CREATE TABLE IF NOT EXISTS `std_absen` (
-  `id_` int NOT NULL AUTO_INCREMENT,
+CREATE TABLE `std_absen` (
+  `id_` int(11) NOT NULL,
   `abs_nisn` varchar(15) NOT NULL,
   `abs_cl_code` varchar(30) NOT NULL,
   `abs_ket` varchar(1) NOT NULL,
@@ -236,9 +218,8 @@ CREATE TABLE IF NOT EXISTS `std_absen` (
   `abs_bln` varchar(2) NOT NULL,
   `abs_th` varchar(4) NOT NULL,
   `abs_tp` varchar(20) NOT NULL,
-  `abs_semester` varchar(20) NOT NULL,
-  PRIMARY KEY (`id_`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `abs_semester` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -246,9 +227,8 @@ CREATE TABLE IF NOT EXISTS `std_absen` (
 -- Table structure for table `std_rekap_absen`
 --
 
-DROP TABLE IF EXISTS `std_rekap_absen`;
-CREATE TABLE IF NOT EXISTS `std_rekap_absen` (
-  `id_` int NOT NULL AUTO_INCREMENT,
+CREATE TABLE `std_rekap_absen` (
+  `id_` int(11) NOT NULL,
   `abs_nisn` varchar(15) NOT NULL,
   `abs_cl_code` varchar(30) NOT NULL,
   `abs_ket` varchar(1) NOT NULL,
@@ -258,9 +238,140 @@ CREATE TABLE IF NOT EXISTS `std_rekap_absen` (
   `abs_bln` varchar(2) NOT NULL,
   `abs_th` varchar(4) NOT NULL,
   `abs_tp` varchar(20) NOT NULL,
-  `abs_semester` varchar(20) NOT NULL,
-  PRIMARY KEY (`id_`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `abs_semester` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `std_rekap_absen`
+--
+
+INSERT INTO `std_rekap_absen` (`id_`, `abs_nisn`, `abs_cl_code`, `abs_ket`, `abs_ket_lain`, `abs_date`, `abs_tg`, `abs_bln`, `abs_th`, `abs_tp`, `abs_semester`) VALUES
+(53, '0003', '7-A', '0', '', '2024-01-03', '03', '01', '2024', '2022/2023', 'Genap'),
+(54, '0001', '7-A', '0', '', '2024-01-03', '03', '01', '2024', '2022/2023', 'Genap'),
+(55, '0002', '7-A', '0', '', '2024-01-03', '03', '01', '2024', '2022/2023', 'Genap'),
+(65, '0003', '7-A', '0', '', '2024-01-04', '04', '01', '2024', '2022/2023', 'Genap'),
+(66, '0001', '7-A', '0', '', '2024-01-04', '04', '01', '2024', '2022/2023', 'Genap'),
+(67, '0002', '7-A', '0', '', '2024-01-04', '04', '01', '2024', '2022/2023', 'Genap');
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `app_absen_user`
+--
+ALTER TABLE `app_absen_user`
+  ADD PRIMARY KEY (`id_`),
+  ADD KEY `email` (`email`);
+
+--
+-- Indexes for table `app_class`
+--
+ALTER TABLE `app_class`
+  ADD PRIMARY KEY (`id_`),
+  ADD KEY `cl_teacher` (`cl_teacher`),
+  ADD KEY `cl_code` (`cl_code`);
+
+--
+-- Indexes for table `app_month`
+--
+ALTER TABLE `app_month`
+  ADD PRIMARY KEY (`id_`);
+
+--
+-- Indexes for table `app_school`
+--
+ALTER TABLE `app_school`
+  ADD PRIMARY KEY (`id_`);
+
+--
+-- Indexes for table `app_semester`
+--
+ALTER TABLE `app_semester`
+  ADD PRIMARY KEY (`id_`);
+
+--
+-- Indexes for table `app_student`
+--
+ALTER TABLE `app_student`
+  ADD PRIMARY KEY (`id_`),
+  ADD KEY `std_class_code` (`std_class_code`);
+
+--
+-- Indexes for table `app_tp`
+--
+ALTER TABLE `app_tp`
+  ADD PRIMARY KEY (`id_`);
+
+--
+-- Indexes for table `std_absen`
+--
+ALTER TABLE `std_absen`
+  ADD PRIMARY KEY (`id_`);
+
+--
+-- Indexes for table `std_rekap_absen`
+--
+ALTER TABLE `std_rekap_absen`
+  ADD PRIMARY KEY (`id_`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `app_absen_user`
+--
+ALTER TABLE `app_absen_user`
+  MODIFY `id_` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT for table `app_class`
+--
+ALTER TABLE `app_class`
+  MODIFY `id_` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+
+--
+-- AUTO_INCREMENT for table `app_month`
+--
+ALTER TABLE `app_month`
+  MODIFY `id_` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
+-- AUTO_INCREMENT for table `app_school`
+--
+ALTER TABLE `app_school`
+  MODIFY `id_` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `app_semester`
+--
+ALTER TABLE `app_semester`
+  MODIFY `id_` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `app_student`
+--
+ALTER TABLE `app_student`
+  MODIFY `id_` int(9) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=697;
+
+--
+-- AUTO_INCREMENT for table `app_tp`
+--
+ALTER TABLE `app_tp`
+  MODIFY `id_` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `std_absen`
+--
+ALTER TABLE `std_absen`
+  MODIFY `id_` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `std_rekap_absen`
+--
+ALTER TABLE `std_rekap_absen`
+  MODIFY `id_` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=68;
 
 --
 -- Constraints for dumped tables
