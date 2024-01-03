@@ -276,23 +276,23 @@ public function data_hari()
         $this->db->where('abs_ket', '1');
         $this->db->where('abs_date', $tg);
         $sakit = $this->db->get('std_rekap_absen')->num_rows();
-        $background_color_sakit = ($sakit > 0) ? 'blue' : 'transparent';
+        $color_sakit = ($sakit > 0) ? 'blue' : 'transparent';
 
         $this->db->where('abs_nisn', $siswa->std_nisn);
         $this->db->where('abs_ket', '2');
         $this->db->where('abs_date', $tg);
         $ijin = $this->db->get('std_rekap_absen')->num_rows();
-        $background_color_ijin = ($ijin > 0) ? 'yellow' : 'transparent';
+        $color_ijin = ($ijin > 0) ? 'yellow' : 'transparent';
 
         $this->db->where('abs_nisn', $siswa->std_nisn);
         $this->db->where('abs_ket', '3');
         $this->db->where('abs_date', $tg);
         $tanpa_ket = $this->db->get('std_rekap_absen')->num_rows();
-        $background_color_tanpa_ket = ($tanpa_ket > 0) ? 'red' : 'transparent';
+        $color_tanpa_ket = ($tanpa_ket > 0) ? 'red' : 'transparent';
 
-        $data .= '<td style="text-align: center; background-color: ' . $background_color_sakit . ';"></td>';
-        $data .= '<td style="text-align: center; background-color: ' . $background_color_ijin . ';"></td>';
-        $data .= '<td style="text-align: center; background-color: ' . $background_color_tanpa_ket . ';"></td>';
+        $data .= '<td style="text-align: center; background-color: ' . $color_sakit . '; background-color: ' . $color_sakit . ';">'. $sakit .'</td>';
+        $data .= '<td style="text-align: center; background-color: ' . $color_ijin . ';">'. $ijin .'</td>';
+        $data .= '<td style="text-align: center; background-color: ' . $color_tanpa_ket . ';">'. $tanpa_ket .'</td>';
         $data .= '</tr>';
     }
     $data .= '</tbody></table></div></div>';
