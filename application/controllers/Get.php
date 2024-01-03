@@ -71,7 +71,7 @@ class Get extends CI_Controller {
         	$data .= $siswa->std_name;
         	$data .= '<td>';
         	$data .= '<select name="absen[]" id="absen" class="form-control">
-					<option value="">-</option>
+					<option value="0">-</option>
 					<option value="1">Sakit</option>
 					<option value="2">Ijin</option>
 					<option value="3">Tanpa Keterangan</option>

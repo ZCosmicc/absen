@@ -51,6 +51,8 @@
                                 echo "Ijin";
                               } elseif ($absen->abs_ket == '3') {
                                 echo "Tanpa Keterangan";
+                              } elseif ($absen->abs_ket == '0') {
+                                echo "Hadir";
                               }
                            ?>
                         </td>

@@ -51,55 +51,68 @@ class Administrator extends CI_Controller {
 	}
 
 	function input_absen()
-	{
-		if (! $this->session->userdata('email')) {
-			redirect('','refresh');
-		}
-		//error_reporting(0);
-		$std_nisn = $this->input->post('std_nisn[]');
-		$absen = $this->input->post('absen[]');
-		$ket_lain = $this->input->post('ket_lain[]');
-		$nama_kelas = $this->input->post('class_name');
-		$tanggal = $this->input->post('date');
+{
+    if (!$this->session->userdata('email')) {
+        redirect('', 'refresh');
+    }
 
-		$sch = $this->db->get('app_school')->row_array();
+    $std_nisn = $this->input->post('std_nisn[]');
+    $absen = $this->input->post('absen[]');
+    $ket_lain = $this->input->post('ket_lain[]');
+    $nama_kelas = $this->input->post('class_name');
+    $tanggal = $this->input->post('date');
 
-		$abs_th = substr($tanggal, 0, 4);
-		$abs_bln = substr($tanggal, 5, 2);
-		$abs_tg = substr($tanggal, 8, 2);
+    $sch = $this->db->get('app_school')->row_array();
 
-		$data = array();
-		$index = 0;
-		foreach ($absen as $data_absen) {
+    $abs_th = substr($tanggal, 0, 4);
+    $abs_bln = substr($tanggal, 5, 2);
+    $abs_tg = substr($tanggal, 8, 2);
 
-			array_push($data, array(
-				'abs_nisn' => $std_nisn[$index],
-				'abs_ket' => $absen[$index],
-				'abs_ket_lain' => $ket_lain[$index],
-				'abs_date' => $tanggal,
-				'abs_cl_code' => $this->input->post('class_code'),
-				'abs_th' => $abs_th,
-				'abs_bln' => $abs_bln,
-				'abs_tg' => $abs_tg,
-				'abs_tp' => $sch['sch_tp'],
-				'abs_semester' => $sch['sch_semester'],
+    $data = array();
+    $index = 0;
 
-			));
+    foreach ($absen as $data_absen) {
+        // Cek apakah data sudah ada di std_rekap_absen
+        $existing_data = $this->db->get_where('std_rekap_absen', array(
+            'abs_nisn' => $std_nisn[$index],
+            'abs_date' => $tanggal
+        ))->row_array();
 
-			$index++;
-			
-		}
+        if ($existing_data) {
+            // Jika data sudah ada, update abs_ket dan abs_ket_lain
+            $this->db->where('abs_nisn', $std_nisn[$index]);
+            $this->db->where('abs_date', $tanggal);
+            $this->db->update('std_rekap_absen', array(
+                'abs_ket' => $absen[$index],
+                'abs_ket_lain' => $ket_lain[$index],
+            ));
+        } else {
+            // Jika data belum ada, tambahkan data baru
+            $data[] = array(
+                'abs_nisn' => $std_nisn[$index],
+                'abs_ket' => $absen[$index],
+                'abs_ket_lain' => $ket_lain[$index],
+                'abs_date' => $tanggal,
+                'abs_cl_code' => $this->input->post('class_code'),
+                'abs_th' => $abs_th,
+                'abs_bln' => $abs_bln,
+                'abs_tg' => $abs_tg,
+                'abs_tp' => $sch['sch_tp'],
+                'abs_semester' => $sch['sch_semester'],
+            );
+        }
 
-		$insert = $this->modelinsert->absen($data);
-		if ($insert) {
-			//$this->session->set_flashdata('success', 'Input data absen kelas '.$nama_kelas.' berhasil');
-			redirect('administrator/input','refresh');
-		} else {
-			//$this->session->set_flashdata('error', 'Input data absen kelas '.$nama_kelas.' gagal');
-			redirect('administrator/input','refresh');
-		}
+        $index++;
+    }
 
-	}
+    // Tambahkan data baru ke std_rekap_absen menggunakan insert_batch
+    if (!empty($data)) {
+        $this->modelinsert->absen($data);
+    }
+
+    redirect('administrator/input', 'refresh');
+}
+
 
 	public function cetak_harian()
 	{
