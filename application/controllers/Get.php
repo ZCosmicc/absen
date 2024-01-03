@@ -307,6 +307,23 @@ public function data_hari()
     $bulan = $_POST['dateb'];
     $kelas = $this->db->get('app_class',['cl_code' => $cl_code])->row_array();
     //$bulan = substr($tg, 5, 2);
+
+    $months = array(
+        '01' => 'Januari',
+        '02' => 'Februari',
+        '03' => 'Maret',
+        '04' => 'April',
+        '05' => 'Mei',
+        '06' => 'Juni',
+        '07' => 'Juli',
+        '08' => 'Agustus',
+        '09' => 'September',
+        '10' => 'Oktober',
+        '11' => 'November',
+        '12' => 'Desember'
+    );
+    
+    $nama_bulan = $months[$bulan];
   
 
     $this->db->select('*');
@@ -320,7 +337,7 @@ public function data_hari()
             <div class="row">
                <div class="col-md-12">';
     $data .= '<table><tr><td style="padding-right: 20px">Nama Kelas</td><td>:</td><td>'.$kelas["cl_name"].'</td>';
-    $data .= '<tr><td>Bulan</td><td>:</td><td>'.$bulan.'</td></tr></table>';
+    $data .= '<tr><td>Bulan</td><td>:</td><td>'.$nama_bulan.'</td></tr></table>';
     $data .= '</div></div></div>';
 
     $data .= '<hr><table border="all" style="border-collapse: collapse; width:100%" class="table table-hover table-bordered"><thead><tr><th width="40px">No</th><th>Nama</th><th>NISN</th><th width="100px" style="text-align: center;">Sakit</th><th width="100px" style="text-align: center;">Ijin</th><th width="100px" style="text-align: center;">Tanpa Ket</th></tr></thead>';
