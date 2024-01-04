@@ -3,93 +3,114 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Get extends CI_Controller {
 
-	public function datasiswaabsen()
-	{
-		$cl_code = $_POST['cl_code'];
-    $tg = $_POST['date'];
+  public function datasiswaabsen()
+  {
+      $cl_code = $_POST['cl_code'];
+      $tg = $_POST['date'];
+  
+      function tgl_indo($tanggal)
+      {
+          $bulan = array(
+              1 =>   'Januari',
+              'Februari',
+              'Maret',
+              'April',
+              'Mei',
+              'Juni',
+              'Juli',
+              'Agustus',
+              'September',
+              'Oktober',
+              'November',
+              'Desember'
+          );
+          $pecahkan = explode('-', $tanggal);
+  
+          return $pecahkan[2] . ' ' . $bulan[(int)$pecahkan[1]] . ' ' . $pecahkan[0];
+      }
+  
+      $kelas = $this->db->get_where('app_class', ['cl_code' => $cl_code])->row_array();
+      $siswa = $this->db->get_where('app_student', ['std_class_code' => $cl_code])->result();
+  
+      // Cek apakah data absen sudah ada untuk kelas dan tanggal tersebut
+      $existing_data = $this->db->get_where('std_rekap_absen', [
+          'abs_cl_code' => $cl_code,
+          'abs_date' => $tg
+      ])->result();
+  
+      $data = '<div class="card-header"><h3 class="card-title">Input Absensi</h3></div>
+               <div class="card-body">
+                  <div class="row">
+                      <div class="col-md-12">
+                          <form action="' . base_url() . 'administrator/input_absen" method="post">
+                              <table>
+                                  <tr>
+                                      <td style="padding-right: 20px">Nama Kelas</td>
+                                      <td>:</td>
+                                      <td style="padding-left: 10px">' . $kelas['cl_name'] . '
+                                          <input type="hidden" name="class_name" value="' . $kelas["cl_name"] . '">
+                                          <input type="hidden" name="class_code" value="' . $cl_code . '">
+                                          <input type="hidden" name="date" value="' . $tg . '">
+                                      </td>
+                                  </tr>
+                                  <tr>
+                                      <td>Tanggal</td>
+                                      <td>:</td>
+                                      <td style="padding-left: 10px">' . tgl_indo($tg) . '</td>
+                                  </tr>
+                              </table>
+                              <br>
+                              <table class="table">
+                                  <thead>
+                                      <tr>
+                                          <th>No</th>
+                                          <th>Nama</th>
+                                          <th>Absensi</th>
+                                          <th>Keterangan Lain</th>
+                                      </tr>
+                                  </thead>
+                                  <tbody>';
+  
+      $no = 1;
+      $existing_data_array = array();
 
-    function tgl_indo($tanggal){
-      $bulan = array (
-        1 =>   'Januari',
-        'Februari',
-        'Maret',
-        'April',
-        'Mei',
-        'Juni',
-        'Juli',
-        'Agustus',
-        'September',
-        'Oktober',
-        'November',
-        'Desember'
-      );
-      $pecahkan = explode('-', $tanggal);
-      
-     
-      return $pecahkan[2] . ' ' . $bulan[ (int)$pecahkan[1] ] . ' ' . $pecahkan[0];
-    }
+// Membuat array dari data yang sudah ada
+foreach ($existing_data as $ex_data) {
+  $existing_data_array[$ex_data->abs_nisn] = [
+      'abs_ket' => $ex_data->abs_ket,
+      'abs_ket_lain' => $ex_data->abs_ket_lain,
+  ];
+}
 
-		$kelas = $this->db->get_where('app_class', ['cl_code' => $cl_code])->row_array();
-		$siswa = $this->db->get_where('app_student', ['std_class_code' => $cl_code])->result();
-
-		$data = '';
-		$data .= '<div class="card-header"><h3 class="card-title">Input Absensi</h3></div><div class="card-body">
-            <div class="row">
-              <div class="col-md-12">
-                <table>
-                  <tr>
-                    <td style="padding-right: 20px">Nama Kelas</td><td>:</td><td style="padding-left: 10px">';
-        $data .= $kelas['cl_name'];
-        $data .= '<input type="hidden" name="class_name" value="'.$kelas["cl_name"].'"> ';
-        $data .= '<input type="hidden" name="class_code" value="'.$cl_code.'"> ';
-
-        $data .= '<input type="hidden" name="date" value="'.$tg.'"> ';
-        $data .= '</td>
-                  </tr><tr><td>Tanggal</td><td>:</td><td style="padding-left: 10px">';
-        $data .= tgl_indo($tg);
-        $data .= '</td>
-                  </tr>
-                </table>
-                <br>
-                <table class="table">
-                  <thead>
-                    <tr>
-                      <th>No</th>
-                      <th>Nama</th>
-                      <th>Absensi</th>
-                      <th>Keterangan Lain</th>
-                    </tr>
-                  </thead>
-                  <tbody>';
-        $no = 1;
-        foreach ($siswa as $siswa) {
-        	$data .= '<input type="hidden" name="std_nisn[]" id="std_nisn" value="'.$siswa->std_nisn.'">';
-        	$data .= '<tr><td>';
-        	$data .= $no++;
-        	$data .= '</td>';
-        	$data .= '<td>';
-        	$data .= $siswa->std_name;
-        	$data .= '<td>';
-        	$data .= '<select name="absen[]" id="absen" class="form-control">
-					<option value="0">-</option>
-					<option value="1">Sakit</option>
-					<option value="2">Ijin</option>
-					<option value="3">Tanpa Keterangan</option>
-					</select>';
-        	$data .= '</td>';
-        	$data .= '<td>';
-        	$data .= '<input type="text" name="ket_lain[]" id="ket_lain" class="form-control">';
-        	$data .= '</td></tr>';
-
-        }
-        $data .= '</tbody></table>';
-        $data .= '</div></div></div></div>';
-        $data .= '<button type="submit" class="btn btn-success">Input</button>';
-        	
-		echo json_encode($data);
-
-	}
-
+foreach ($siswa as $siswa) {
+  $data .= '<input type="hidden" name="std_nisn[]" id="std_nisn" value="' . $siswa->std_nisn . '">';
+  $data .= '<tr>
+              <td>' . $no++ . '</td>
+              <td>' . $siswa->std_name . '</td>
+              <td>
+                  <select name="absen[]" id="absen" class="form-control">
+                      <option value="0" ' . (isset($existing_data_array[$siswa->std_nisn]) && $existing_data_array[$siswa->std_nisn]['abs_ket'] == 0 ? 'selected' : '') . '>-</option>
+                      <option value="1" ' . (isset($existing_data_array[$siswa->std_nisn]) && $existing_data_array[$siswa->std_nisn]['abs_ket'] == 1 ? 'selected' : '') . '>Sakit</option>
+                      <option value="2" ' . (isset($existing_data_array[$siswa->std_nisn]) && $existing_data_array[$siswa->std_nisn]['abs_ket'] == 2 ? 'selected' : '') . '>Ijin</option>
+                      <option value="3" ' . (isset($existing_data_array[$siswa->std_nisn]) && $existing_data_array[$siswa->std_nisn]['abs_ket'] == 3 ? 'selected' : '') . '>Tanpa Keterangan</option>
+                  </select>
+              </td>
+              <td>
+                  <input type="text" name="ket_lain[]" id="ket_lain" class="form-control" value="' . (isset($existing_data_array[$siswa->std_nisn]) ? $existing_data_array[$siswa->std_nisn]['abs_ket_lain'] : '') . '">
+              </td>
+          </tr>';
+}
+  
+      $data .= '</tbody></table>
+                <button type="submit" class="btn btn-success">Input</button>
+              </form>
+          </div>
+      </div>
+  </div>';
+  
+      echo json_encode($data);
+  }
+  
   public function datasiswab()
 	{
 		$cl_code = $_POST['cl_code'];
