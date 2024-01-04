@@ -30,7 +30,7 @@
         </script>
 
           <div class="card-header">
-            <h3 class="card-title">Pilih bulan dan kelas</h3>
+            <h3 class="card-title">Pilih bulan dan kelas. Halaman ini hanya bisa menunjukkan data pada bulan yang dipilih.</h3>
             <a href="#" class="btn btn-sm btn-success float-right" onclick="refreshPage()">Refresh</a>
           </div>
           <!-- /.card-header -->
