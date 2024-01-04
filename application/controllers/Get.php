@@ -334,7 +334,6 @@ public function data_hari()
     $cl_code = $_POST['cl_codeb'];
     $bulan = $_POST['dateb'];
 
-    // Perubahan 1: Ambil data kelas dari tabel 'app_class' berdasarkan 'cl_code'
     $kelas = $this->db->get_where('app_class', ['cl_code' => $cl_code])->row_array();
 
     $months = array(
@@ -354,10 +353,8 @@ public function data_hari()
     
     $nama_bulan = $months[$bulan];
 
-    // Perubahan 2: Ambil data siswa dari tabel 'app_student' berdasarkan 'std_class_code'
     $siswa = $this->db->get_where('app_student', ['std_class_code' => $cl_code])->result();
 
-    // Perubahan 3: Ambil nama guru dari database 'app_absen_user' berdasarkan 'cl_teacher'
     $this->db->select('name');
     $this->db->from('app_absen_user');
     $this->db->where('email', $kelas['cl_teacher']);
@@ -415,15 +412,12 @@ public function data_hari()
     $tp = $_POST['tp'];
     $kelass = $_POST['cl_codes'];
 
-    // Perubahan 1: Ambil data kelas dari tabel 'app_class' berdasarkan 'cl_code'
     $kelas = $this->db->get_where('app_class', ['cl_code' => $kelass])->row_array();
 
-    // Perubahan 2: Ambil data siswa dari tabel 'app_student' berdasarkan 'std_class_code'
     $this->db->select('*');
     $this->db->where('std_class_code', $kelass);
     $siswa = $this->db->get('app_student')->result();
 
-    // Perubahan 3: Ambil nama guru dari database 'app_absen_user' berdasarkan 'cl_teacher'
     $this->db->select('name');
     $this->db->from('app_absen_user');
     $this->db->where('email', $kelas['cl_teacher']);

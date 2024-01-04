@@ -22,8 +22,16 @@
     <section class="content">
       <div class="container-fluid">
         <div class="card card-default">
+
+        <script>
+            function refreshPage() {
+                location.reload();
+            }
+        </script>
+
           <div class="card-header">
             <h3 class="card-title">Pilih tanggal dan kelas</h3>
+            <a href="#" class="btn btn-sm btn-success float-right" onclick="refreshPage()">Refresh</a>
           </div>
           <!-- /.card-header -->
           <div class="card-body">

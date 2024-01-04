@@ -23,9 +23,16 @@
       <div class="flash_error" data-flash_error="<?php echo $this->session->flashdata('error'); ?>"></div>
       <div class="container-fluid">
 
+      <script>
+          function refreshPage() {
+              location.reload();
+          }
+      </script>
+
         <div class="card card-default">
           <div class="card-header">
             <h3 class="card-title">Pilih tanggal dan kelas</h3>
+            <a href="#" class="btn btn-sm btn-success float-right" onclick="refreshPage()">Refresh</a>
           </div>
           <!-- /.card-header -->
           <div class="card-body">
