@@ -275,10 +275,18 @@ public function data_hari()
     $kelas = $this->db->get_where('app_class', ['cl_code' => $cl_code])->row_array();
     $siswa = $this->db->get_where('app_student', ['std_class_code' => $cl_code])->result();
 
+    $this->db->select('name');
+    $this->db->from('app_absen_user');
+    $this->db->where('email', $kelas['cl_teacher']);
+    $nama_guru = $this->db->get()->row_array();
+
     $no = 1;
     $data = '<div class="container-fluid"><div style="text-align:center" class="card-header"><h3 class="card-title">Data Kehadiran Harian</h3></div><div class="card-body"><div class="row"><div class="col-md-6">';
     $data .= '<table><tr><td style="padding-right: 20px">Nama Kelas</td><td>:</td><td>'.$kelas["cl_name"].'</td>';
-    $data .= '<tr><td>Tanggal</td><td>:</td><td>'.$tg.'</td></tr></table>';
+    $data .= '<tr><td>Tanggal</td><td>:</td><td>'.$tg.'</td></tr>';
+
+    $data .= '<tr><td>Guru</td><td>:</td><td>'.$nama_guru['name'].'</td></tr></table>';
+
     $data .= '</div></div></div>';
 
     $data .= '<hr><table border="all" style="border-collapse: collapse; width:100%" class="table table-hover table-bordered"><thead><tr><th width="40px">No</th><th>Nama</th><th>NISN</th><th width="100px" style="text-align: center;">Sakit</th><th width="100px" style="text-align: center;">Ijin</th><th width="100px" style="text-align: center;">Tanpa Ket</th></tr></thead>';
@@ -325,8 +333,9 @@ public function data_hari()
   {
     $cl_code = $_POST['cl_codeb'];
     $bulan = $_POST['dateb'];
-    $kelas = $this->db->get('app_class',['cl_code' => $cl_code])->row_array();
-    //$bulan = substr($tg, 5, 2);
+
+    // Perubahan 1: Ambil data kelas dari tabel 'app_class' berdasarkan 'cl_code'
+    $kelas = $this->db->get_where('app_class', ['cl_code' => $cl_code])->row_array();
 
     $months = array(
         '01' => 'Januari',
@@ -344,12 +353,15 @@ public function data_hari()
     );
     
     $nama_bulan = $months[$bulan];
-  
 
-    $this->db->select('*');
-    $this->db->where('std_class_code', $cl_code);
-    //$this->db->join('std_rekap_absen', 'std_rekap_absen.abs_nisn = app_student.std_nisn', 'left');
-    $siswa = $this->db->get('app_student')->result();
+    // Perubahan 2: Ambil data siswa dari tabel 'app_student' berdasarkan 'std_class_code'
+    $siswa = $this->db->get_where('app_student', ['std_class_code' => $cl_code])->result();
+
+    // Perubahan 3: Ambil nama guru dari database 'app_absen_user' berdasarkan 'cl_teacher'
+    $this->db->select('name');
+    $this->db->from('app_absen_user');
+    $this->db->where('email', $kelas['cl_teacher']);
+    $nama_guru = $this->db->get()->row_array();
 
     $no = 1;
     $data = '';
@@ -357,7 +369,10 @@ public function data_hari()
             <div class="row">
                <div class="col-md-12">';
     $data .= '<table><tr><td style="padding-right: 20px">Nama Kelas</td><td>:</td><td>'.$kelas["cl_name"].'</td>';
-    $data .= '<tr><td>Bulan</td><td>:</td><td>'.$nama_bulan.'</td></tr></table>';
+    $data .= '<tr><td>Bulan</td><td>:</td><td>'.$nama_bulan.'</td></tr>';
+
+    $data .= '<tr><td>Guru</td><td>:</td><td>'.$nama_guru['name'].'</td></tr></table>';
+
     $data .= '</div></div></div>';
 
     $data .= '<hr><table border="all" style="border-collapse: collapse; width:100%" class="table table-hover table-bordered"><thead><tr><th width="40px">No</th><th>Nama</th><th>NISN</th><th width="100px" style="text-align: center;">Sakit</th><th width="100px" style="text-align: center;">Ijin</th><th width="100px" style="text-align: center;">Tanpa Ket</th></tr></thead>';
@@ -399,11 +414,20 @@ public function data_hari()
     $sem = $_POST['sem'];
     $tp = $_POST['tp'];
     $kelass = $_POST['cl_codes'];
-    $kelas = $this->db->get('app_class',['cl_code' => $kelass])->row_array();
 
+    // Perubahan 1: Ambil data kelas dari tabel 'app_class' berdasarkan 'cl_code'
+    $kelas = $this->db->get_where('app_class', ['cl_code' => $kelass])->row_array();
+
+    // Perubahan 2: Ambil data siswa dari tabel 'app_student' berdasarkan 'std_class_code'
     $this->db->select('*');
     $this->db->where('std_class_code', $kelass);
     $siswa = $this->db->get('app_student')->result();
+
+    // Perubahan 3: Ambil nama guru dari database 'app_absen_user' berdasarkan 'cl_teacher'
+    $this->db->select('name');
+    $this->db->from('app_absen_user');
+    $this->db->where('email', $kelas['cl_teacher']);
+    $nama_guru = $this->db->get()->row_array();
 
     $no = 1;
     $data = '';
@@ -412,7 +436,10 @@ public function data_hari()
                <div class="col-md-12">';
     $data .= '<table><tr><td style="padding-right: 20px">Nama Kelas</td><td>:</td><td>'.$kelas["cl_name"].'</td>';
     $data .= '<tr><td>Tahun Pelajaran</td><td>:</td><td>'.$tp.'</td></tr>';
-    $data .= '<tr><td>Semester</td><td>:</td><td>'.$sem.'</td></tr></table>';
+    $data .= '<tr><td>Semester</td><td>:</td><td>'.$sem.'</td></tr>';
+
+    $data .= '<tr><td>Guru</td><td>:</td><td>'.$nama_guru['name'].'</td></tr></table>';
+
     $data .= '</div></div></div>';
 
     $data .= '<hr><table border="all" style="border-collapse: collapse; width:100%" class="table table-hover table-bordered"><thead><tr><th width="40px">No</th><th>Nama</th><th>NISN</th><th width="100px" style="text-align: center;">Sakit</th><th width="100px" style="text-align: center;">Ijin</th><th width="100px" style="text-align: center;">Tanpa Ket</th></tr></thead>';

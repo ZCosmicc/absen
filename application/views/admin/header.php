@@ -21,11 +21,12 @@
     </form> -->
     <?php
     $email = $this->session->userdata('email');
+    $name = $this->session->userdata('name');
     $role = $this->session->userdata('role');
     ?>
 
     <?php if ($email !== null && $role !== null) : ?>
-        <p>Selamat datang, <?php echo $email; ?> (<?php echo $role; ?>)</p>
+        <p><b>SELAMAT DATANG, <?php echo $name; ?></b> <br>(Email: <?php echo $email; ?>, Status pengguna: <?php echo $role; ?>)</p>
     <?php endif; ?>
 
     

@@ -148,7 +148,7 @@
 				},
 				error:function()
 				{
-					alert('error');
+					alert('error cetak');
 				}
 			})
 		});
@@ -172,7 +172,7 @@
 				},
 				error:function()
 				{
-					alert('error');
+					alert('error hari');
 				}
 			})
 		});
