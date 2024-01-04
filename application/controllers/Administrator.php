@@ -173,7 +173,7 @@ class Administrator extends CI_Controller {
 			redirect('','refresh');
 		}
 
-		$data['semester'] = $this->db->get('app_semester')->result();
+		//$data['semester'] = $this->db->get('app_semester')->result();
 		$data['tp'] = $this->db->get('app_tp')->result();
 		$data['kelas'] = $this->db->get('app_class')->result();
 		$data['sch'] = $this->db->get('app_school')->row_array();
@@ -434,7 +434,7 @@ public function data_sem_edit($student_id)
     }
 
     $data['all_tp'] = $this->db->get('app_tp')->result();
-	$data['all_semester'] = $this->db->get('app_semester')->result();
+	//$data['all_semester'] = $this->db->get('app_semester')->result();
 
 	// $this->db->where('id_', '1');
 	$data['allschool'] = $this->db->get_where('app_school', array('id_' => $student_id))->row();

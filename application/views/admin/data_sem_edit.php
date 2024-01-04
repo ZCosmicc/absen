@@ -43,14 +43,10 @@
                                         </select>
                                     </div>
                                     <div class="form-group">
-                                        <label for="semester">Semester:</label>
+                                        <label for="semester">semester:</label>
                                         <select id="semester" class="form-control" name="semester" required>
-                                            <option value="">-- Pilih Semester --</option>
-                                            <?php foreach ($all_semester as $semester): ?>
-                                                <option value="<?php echo $semester->sem_name ?>" <?php echo ($allschool->sch_semester == $semester->sem_name) ? 'selected' : ''; ?>>
-                                                    <?php echo $semester->sem_name; ?>
-                                                </option>
-                                            <?php endforeach; ?>
+                                            <option value="Ganjil" selected>Ganjil</option>
+                                            <option value="Genap">Genap</option>
                                         </select>
                                     </div>
                                     <input type="hidden" id="id_" name="id_" value="<?php echo $allschool->id_; ?>">

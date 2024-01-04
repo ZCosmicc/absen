@@ -42,12 +42,12 @@
               <div class="col-md-4">
                 <div class="form-group">
                   <select id="sem" class="form-control select2" style="width: 100%;" required="">
-                    <option value="<?php echo $sch['sch_semester'] ?>"><?php echo $sch['sch_semester'] ?></option>
+                    
                     <option value="">-- Pilih semester --</option>
-                    <?php foreach ($semester as $semester): ?>
-                        <option value="<?php echo $semester->sem_name ?>"><?php echo $semester->sem_name ?></option>
-                    <?php endforeach ?>
+                    <option value="Ganjil" selected>Ganjil</option>
+                    <option value="Genap">Genap</option>
                   </select>
+
                 </div>
               </div>
               <div class="col-md-4">
