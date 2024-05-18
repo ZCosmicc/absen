@@ -11,28 +11,42 @@ class Administrator extends CI_Controller {
 	}
 
 	public function index()
-	{
-		if (! $this->session->userdata('email')) {
-			redirect('','refresh');
-		}
+{
+    if (! $this->session->userdata('email')) {
+        redirect('','refresh');
+    }
 
-		$email = $this->session->userdata('email');
-    	$role = $this->session->userdata('role');
-		
-		$data['siswa'] = $this->db->get('app_student')->num_rows();
-		
-		$data['sakit'] = $this->db->get_where('std_rekap_absen',['abs_ket' => '1'])->num_rows();
-		$data['ijin'] = $this->db->get_where('std_rekap_absen',['abs_ket' => '2'])->num_rows();
-		$data['bolos'] = $this->db->get_where('std_rekap_absen',['abs_ket' => '3'])->num_rows();
-		$data['sekolah'] = $this->db->get('app_school')->row_array();
+    $email = $this->session->userdata('email');
+    $role = $this->session->userdata('role');
+    
+    $data['siswa'] = $this->db->get('app_student')->num_rows();
+    $data['sekolah'] = $this->db->get('app_school')->row_array();
 
-		$this->load->view('admin/meta');
-		$this->load->view('admin/header');
-		$this->load->view('admin/sidebar');
-		$this->load->view('admin/dashboard', $data);
-		$this->load->view('admin/footer');
-		$this->load->view('admin/script');
-	}
+    // Ambil data semester dan tahun ajar dari tabel app_school
+    $semester = $data['sekolah']['sch_semester'];
+    $tahun_ajar = $data['sekolah']['sch_tp'];
+
+    // Filter data absen berdasarkan semester dan tahun ajar
+    $this->db->where('abs_tp', $tahun_ajar);
+    $this->db->where('abs_semester', $semester);
+    $data['sakit'] = $this->db->get_where('std_rekap_absen',['abs_ket' => '1'])->num_rows();
+
+    $this->db->where('abs_tp', $tahun_ajar);
+    $this->db->where('abs_semester', $semester);
+    $data['ijin'] = $this->db->get_where('std_rekap_absen',['abs_ket' => '2'])->num_rows();
+
+    $this->db->where('abs_tp', $tahun_ajar);
+    $this->db->where('abs_semester', $semester);
+    $data['bolos'] = $this->db->get_where('std_rekap_absen',['abs_ket' => '3'])->num_rows();
+
+    $this->load->view('admin/meta');
+    $this->load->view('admin/header');
+    $this->load->view('admin/sidebar');
+    $this->load->view('admin/dashboard', $data);
+    $this->load->view('admin/footer');
+    $this->load->view('admin/script');
+}
+
 
 	public function input()
 	{
@@ -186,68 +200,83 @@ class Administrator extends CI_Controller {
 		$this->load->view('admin/script');
 	}
 
-	public function detail_sakit()
-	{
-		if (! $this->session->userdata('email')) {
-			redirect('','refresh');
-		}
+    public function detail_sakit()
+    {
+        if (! $this->session->userdata('email')) {
+            redirect('','refresh');
+        }
+    
+        $data['sekolah'] = $this->db->get('app_school')->row_array();
+        $tahun_pelajaran = $data['sekolah']['sch_tp'];
+        $semester = $data['sekolah']['sch_semester'];
+    
+        $this->db->select('*');
+        $this->db->where('abs_ket', '1');
+        $this->db->where('abs_tp', $tahun_pelajaran);
+        $this->db->where('abs_semester', $semester);
+        $this->db->join('app_student', 'app_student.std_nisn = std_rekap_absen.abs_nisn', 'left');
+        $data['sakit'] = $this->db->get('std_rekap_absen')->result();
+    
+        $this->load->view('admin/meta');
+        $this->load->view('admin/header');
+        $this->load->view('admin/sidebar');
+        $this->load->view('admin/detail_sakit', $data);
+        $this->load->view('admin/footer');
+        $this->load->view('admin/script');
+    }
+    
+    
 
-		$this->db->select('*');
-		$this->db->where('abs_ket', '1');
-		$this->db->join('app_student', 'app_student.std_nisn = std_rekap_absen.abs_nisn', 'left');
-		$data['sakit'] = $this->db->get('std_rekap_absen')->result();
-		
-		$data['sekolah'] = $this->db->get('app_school')->row_array();
-
-		$this->load->view('admin/meta');
-		$this->load->view('admin/header');
-		$this->load->view('admin/sidebar');
-		$this->load->view('admin/detail_sakit', $data);
-		$this->load->view('admin/footer');
-		$this->load->view('admin/script');
-	}
-
-	public function detail_ijin()
-	{
-		if (! $this->session->userdata('email')) {
-			redirect('','refresh');
-		}
-
-		$this->db->select('*');
-		$this->db->where('abs_ket', '2');
-		$this->db->join('app_student', 'app_student.std_nisn = std_rekap_absen.abs_nisn', 'left');
-		$data['sakit'] = $this->db->get('std_rekap_absen')->result();
-		
-		$data['sekolah'] = $this->db->get('app_school')->row_array();
-
-		$this->load->view('admin/meta');
-		$this->load->view('admin/header');
-		$this->load->view('admin/sidebar');
-		$this->load->view('admin/detail_ijin', $data);
-		$this->load->view('admin/footer');
-		$this->load->view('admin/script');
-	}
-
-	public function detail_bolos()
-	{
-		if (! $this->session->userdata('email')) {
-			redirect('','refresh');
-		}
-		
-		$this->db->select('*');
-		$this->db->where('abs_ket', '3');
-		$this->db->join('app_student', 'app_student.std_nisn = std_rekap_absen.abs_nisn', 'left');
-		$data['sakit'] = $this->db->get('std_rekap_absen')->result();
-		
-		$data['sekolah'] = $this->db->get('app_school')->row_array();
-
-		$this->load->view('admin/meta');
-		$this->load->view('admin/header');
-		$this->load->view('admin/sidebar');
-		$this->load->view('admin/detail_bolos', $data);
-		$this->load->view('admin/footer');
-		$this->load->view('admin/script');
-	}
+    public function detail_ijin()
+    {
+        if (! $this->session->userdata('email')) {
+            redirect('','refresh');
+        }
+    
+        $data['sekolah'] = $this->db->get('app_school')->row_array();
+        $tahun_pelajaran = $data['sekolah']['sch_tp'];
+        $semester = $data['sekolah']['sch_semester'];
+    
+        $this->db->select('*');
+        $this->db->where('abs_ket', '2');
+        $this->db->where('abs_tp', $tahun_pelajaran);
+        $this->db->where('abs_semester', $semester);
+        $this->db->join('app_student', 'app_student.std_nisn = std_rekap_absen.abs_nisn', 'left');
+        $data['ijin'] = $this->db->get('std_rekap_absen')->result();
+    
+        $this->load->view('admin/meta');
+        $this->load->view('admin/header');
+        $this->load->view('admin/sidebar');
+        $this->load->view('admin/detail_ijin', $data);
+        $this->load->view('admin/footer');
+        $this->load->view('admin/script');
+    }
+    
+    public function detail_bolos()
+    {
+        if (! $this->session->userdata('email')) {
+            redirect('','refresh');
+        }
+        
+        $data['sekolah'] = $this->db->get('app_school')->row_array();
+        $tahun_pelajaran = $data['sekolah']['sch_tp'];
+        $semester = $data['sekolah']['sch_semester'];
+    
+        $this->db->select('*');
+        $this->db->where('abs_ket', '3');
+        $this->db->where('abs_tp', $tahun_pelajaran);
+        $this->db->where('abs_semester', $semester);
+        $this->db->join('app_student', 'app_student.std_nisn = std_rekap_absen.abs_nisn', 'left');
+        $data['bolos'] = $this->db->get('std_rekap_absen')->result();
+    
+        $this->load->view('admin/meta');
+        $this->load->view('admin/header');
+        $this->load->view('admin/sidebar');
+        $this->load->view('admin/detail_bolos', $data);
+        $this->load->view('admin/footer');
+        $this->load->view('admin/script');
+    }
+    
 
 	//================================================================ BARU ===========================================================
 
@@ -447,15 +476,39 @@ public function data_sem_edit($student_id)
     $this->load->view('admin/script');
 }
 
-	public function input_siswa()
+public function input_siswa()
 {
-    $class_info = $this->db->get_where('app_class', ['cl_code' => $this->input->post('kelas')])->row_array();
+    $nisn = $this->input->post('nisn');
+    $nama = $this->input->post('nama');
+    $kelas = $this->input->post('kelas');
+
+    if (empty($nisn) || empty($nama) || empty($kelas)) {
+        //$this->session->set_flashdata('error', 'Semua data harus diisi.');
+        redirect('administrator/data_siswa_tambah', 'refresh');
+        return;
+    }
+
+    $existing_student = $this->db->get_where('app_student', ['std_nisn' => $nisn])->row_array();
+
+    if ($existing_student) {
+        //$this->session->set_flashdata('error', 'NISN '.$nisn.' sudah ada di database');
+        redirect('administrator/data_siswa_tambah', 'refresh');
+        return;
+    }
+
+    $class_info = $this->db->get_where('app_class', ['cl_code' => $kelas])->row_array();
+
+    if (empty($class_info)) {
+        //$this->session->set_flashdata('error', 'Informasi kelas tidak ditemukan.');
+        redirect('administrator/data_siswa_tambah', 'refresh');
+        return;
+    }
 
     $data = array(
         'id_' => '',
-        'std_name' => $this->input->post('nama'),
-        'std_nisn' => $this->input->post('nisn'),
-        'std_class_code' => $this->input->post('kelas'),
+        'std_name' => $nama,
+        'std_nisn' => $nisn,
+        'std_class_code' => $kelas,
         'std_class_name' => $class_info['cl_name'],
         'std_grade' => $class_info['cl_grade'],
         'std_major' => '-',
@@ -471,36 +524,58 @@ public function data_sem_edit($student_id)
 
     $insert = $this->modelinsert->siswa($data);
     if ($insert) {
-        //$this->session->set_flashdata('success', 'Input data siswa '.$this->input->post('nama').' berhasil');
-        redirect('administrator/data_siswa','refresh');
+        $this->session->set_flashdata('success', 'Input data siswa '.$nama.' berhasil');
+        redirect('administrator/data_siswa', 'refresh');
     } else {
-        //$this->session->set_flashdata('error', 'Input data absen kelas '.$this->input->post('kelas').' gagal');
-        redirect('administrator/data_siswa','refresh');
+        $this->session->set_flashdata('error', 'Input data siswa '.$nama.' gagal');
+        redirect('administrator/data_siswa_tambah', 'refresh');
     }
 }
+
+
 public function input_guru()
 {
+    $nip = $this->input->post('nip');
+    $email = $this->input->post('email');
+    $name = $this->input->post('name');
+    $role = $this->input->post('role');
     $password = $this->input->post('password');
+
+    if (empty($nip) || empty($email) || empty($name) || empty($role) || empty($password)) {
+        //$this->session->set_flashdata('error', 'Semua data harus diisi.');
+        redirect('administrator/data_guru_tambah', 'refresh');
+        return;
+    }
+
+    $existing_guru = $this->db->get_where('app_absen_user', ['nip' => $nip])->row_array();
+
+    if ($existing_guru) {
+        //$this->session->set_flashdata('error', 'NIP '.$nip.' sudah ada di database');
+        redirect('administrator/data_guru_tambah', 'refresh');
+        return;
+    }
+
     $hashed_password = password_hash($password, PASSWORD_BCRYPT);
 
     $data = array(
         'id_' => '',
-        'email' => $this->input->post('email'),
-        'name' => $this->input->post('name'),
-		'nip' => $this->input->post('nip'),
+        'email' => $email,
+        'name' => $name,
+        'nip' => $nip,
         'password' => $hashed_password,
-        'role' => $this->input->post('role')
+        'role' => $role
     );
 
     $insert = $this->modelinsert->guru($data);
     if ($insert) {
-        //$this->session->set_flashdata('success', 'Input data guru ' . $this->input->post('nama') . ' berhasil');
+        $this->session->set_flashdata('success', 'Input data guru '.$name.' berhasil');
         redirect('administrator/data_guru', 'refresh');
     } else {
-        //$this->session->set_flashdata('error', 'input data guru ' . $this->input->post('nama') . ' gagal');
-        redirect('administrator/data_siswa', 'refresh');
+        $this->session->set_flashdata('error', 'Input data guru '.$name.' gagal');
+        redirect('administrator/data_guru_tambah', 'refresh');
     }
 }
+
 
 
 public function edit_siswa()
