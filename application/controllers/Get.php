@@ -268,143 +268,160 @@ foreach ($siswa as $siswa) {
       echo $data;
   }
 
-public function data_hari()
-{
-    $cl_code = $_POST['cl_codeh'];
-    $tg = $_POST['dateh'];
-    $kelas = $this->db->get_where('app_class', ['cl_code' => $cl_code])->row_array();
-    $siswa = $this->db->get_where('app_student', ['std_class_code' => $cl_code])->result();
-
-    $this->db->select('name');
-    $this->db->from('app_absen_user');
-    $this->db->where('email', $kelas['cl_teacher']);
-    $nama_guru = $this->db->get()->row_array();
-
-    $no = 1;
-    $data = '<div class="container-fluid"><div style="text-align:center" class="card-header"><h3 class="card-title">Data Kehadiran Harian</h3></div><div class="card-body"><div class="row"><div class="col-md-6">';
-    $data .= '<table><tr><td style="padding-right: 20px">Nama Kelas</td><td>:</td><td>'.$kelas["cl_name"].'</td>';
-    $data .= '<tr><td>Tanggal</td><td>:</td><td>'.$tg.'</td></tr>';
-
-    $data .= '<tr><td>Guru</td><td>:</td><td>'.$nama_guru['name'].'</td></tr></table>';
-
-    $data .= '</div></div></div>';
-
-    $data .= '<hr><table border="all" style="border-collapse: collapse; width:100%" class="table table-hover table-bordered"><thead><tr><th width="40px">No</th><th>Nama</th><th>NISN</th><th width="100px" style="text-align: center;">Sakit</th><th width="100px" style="text-align: center;">Ijin</th><th width="100px" style="text-align: center;">Tanpa Ket</th></tr></thead>';
-    $data .= '<tbody>';
-    foreach ($siswa as $siswa) {
-        $data .= '<tr>';
-        $data .= '<td style="text-align: right; padding-right: 5px;">'.$no++.'</td>';
-        $data .= '<td nowrap>'.$siswa->std_name.'</td>';
-        $data .= '<td nowrap>'.$siswa->std_nisn.'</td>';
-
-        $this->db->where('abs_nisn', $siswa->std_nisn);
-        $this->db->where('abs_date', $tg);
-        $ket = $this->db->get('std_rekap_absen')->row_array();
-
-        $this->db->where('abs_nisn', $siswa->std_nisn);
-        $this->db->where('abs_ket', '1');
-        $this->db->where('abs_date', $tg);
-        $sakit = $this->db->get('std_rekap_absen')->num_rows();
-        $color_sakit = ($sakit > 0) ? 'blue' : 'transparent';
-
-        $this->db->where('abs_nisn', $siswa->std_nisn);
-        $this->db->where('abs_ket', '2');
-        $this->db->where('abs_date', $tg);
-        $ijin = $this->db->get('std_rekap_absen')->num_rows();
-        $color_ijin = ($ijin > 0) ? 'yellow' : 'transparent';
-
-        $this->db->where('abs_nisn', $siswa->std_nisn);
-        $this->db->where('abs_ket', '3');
-        $this->db->where('abs_date', $tg);
-        $tanpa_ket = $this->db->get('std_rekap_absen')->num_rows();
-        $color_tanpa_ket = ($tanpa_ket > 0) ? 'red' : 'transparent';
-
-        $data .= '<td style="text-align: center; background-color: ' . $color_sakit . '; background-color: ' . $color_sakit . ';">'. $sakit .'</td>';
-        $data .= '<td style="text-align: center; background-color: ' . $color_ijin . ';">'. $ijin .'</td>';
-        $data .= '<td style="text-align: center; background-color: ' . $color_tanpa_ket . ';">'. $tanpa_ket .'</td>';
-        $data .= '</tr>';
-    }
-    $data .= '</tbody></table></div></div>';
-    echo json_encode($data);
-}
+  public function data_hari()
+  {
+      $cl_code = $_POST['cl_codeh'];
+      $tg = $_POST['dateh'];
+      $kelas = $this->db->get_where('app_class', ['cl_code' => $cl_code])->row_array();
+      $siswa = $this->db->get_where('app_student', ['std_class_code' => $cl_code])->result();
+  
+      $this->db->select('name');
+      $this->db->from('app_absen_user');
+      $this->db->where('email', $kelas['cl_teacher']);
+      $nama_guru = $this->db->get()->row_array();
+  
+      $no = 1;
+      $data = '<div class="container-fluid">';
+      
+      // Menambahkan kop surat di bagian atas
+      $data .= '<div class="kop-surat" style="text-align: center; margin-bottom: 20px;">';
+      $data .= '<img src="' . base_url('assets/img/kop.png') . '" alt="Kop Surat" style="width: 100%; max-width: 800px;">';
+      $data .= '</div>';
+      
+      $data .= '<div style="text-align:center" class="card-header"><h3 class="card-title">Data Kehadiran Harian</h3></div>';
+      $data .= '<div class="card-body"><div class="row"><div class="col-md-6">';
+      $data .= '<table><tr><td style="padding-right: 20px">Nama Kelas</td><td>:</td><td>'.$kelas["cl_name"].'</td>';
+      $data .= '<tr><td>Tanggal</td><td>:</td><td>'.$tg.'</td></tr>';
+      $data .= '<tr><td>Guru</td><td>:</td><td>'.$nama_guru['name'].'</td></tr></table>';
+      $data .= '</div></div></div>';
+      $data .= '<hr><table border="all" style="border-collapse: collapse; width:100%" class="table table-hover table-bordered"><thead><tr><th width="40px">No</th><th>Nama</th><th>NISN</th><th width="100px" style="text-align: center;">Sakit</th><th width="100px" style="text-align: center;">Ijin</th><th width="100px" style="text-align: center;">Tanpa Ket</th></tr></thead>';
+      $data .= '<tbody>';
+      foreach ($siswa as $siswa) {
+          $data .= '<tr>';
+          $data .= '<td style="text-align: right; padding-right: 5px;">'.$no++.'</td>';
+          $data .= '<td nowrap>'.$siswa->std_name.'</td>';
+          $data .= '<td nowrap>'.$siswa->std_nisn.'</td>';
+  
+          $this->db->where('abs_nisn', $siswa->std_nisn);
+          $this->db->where('abs_date', $tg);
+          $ket = $this->db->get('std_rekap_absen')->row_array();
+  
+          $this->db->where('abs_nisn', $siswa->std_nisn);
+          $this->db->where('abs_ket', '1');
+          $this->db->where('abs_date', $tg);
+          $sakit = $this->db->get('std_rekap_absen')->num_rows();
+          $color_sakit = ($sakit > 0) ? 'blue' : 'transparent';
+  
+          $this->db->where('abs_nisn', $siswa->std_nisn);
+          $this->db->where('abs_ket', '2');
+          $this->db->where('abs_date', $tg);
+          $ijin = $this->db->get('std_rekap_absen')->num_rows();
+          $color_ijin = ($ijin > 0) ? 'yellow' : 'transparent';
+  
+          $this->db->where('abs_nisn', $siswa->std_nisn);
+          $this->db->where('abs_ket', '3');
+          $this->db->where('abs_date', $tg);
+          $tanpa_ket = $this->db->get('std_rekap_absen')->num_rows();
+          $color_tanpa_ket = ($tanpa_ket > 0) ? 'red' : 'transparent';
+  
+          $data .= '<td style="text-align: center; background-color: ' . $color_sakit . ';">'. $sakit .'</td>';
+          $data .= '<td style="text-align: center; background-color: ' . $color_ijin . ';">'. $ijin .'</td>';
+          $data .= '<td style="text-align: center; background-color: ' . $color_tanpa_ket . ';">'. $tanpa_ket .'</td>';
+          $data .= '</tr>';
+      }
+      $data .= '</tbody></table></div></div>';
+      echo json_encode($data);
+  }
+  
 
 
   public function data_bulan()
   {
-    $cl_code = $_POST['cl_codeb'];
-    $bulan = $_POST['dateb'];
-
-    $kelas = $this->db->get_where('app_class', ['cl_code' => $cl_code])->row_array();
-
-    $months = array(
-        '01' => 'Januari',
-        '02' => 'Februari',
-        '03' => 'Maret',
-        '04' => 'April',
-        '05' => 'Mei',
-        '06' => 'Juni',
-        '07' => 'Juli',
-        '08' => 'Agustus',
-        '09' => 'September',
-        '10' => 'Oktober',
-        '11' => 'November',
-        '12' => 'Desember'
-    );
-    
-    $nama_bulan = $months[$bulan];
-
-    $siswa = $this->db->get_where('app_student', ['std_class_code' => $cl_code])->result();
-
-    $this->db->select('name');
-    $this->db->from('app_absen_user');
-    $this->db->where('email', $kelas['cl_teacher']);
-    $nama_guru = $this->db->get()->row_array();
-
-    $no = 1;
-    $data = '';
-    $data .= '<div class="container-fluid"><div style="text-align:center" class="card-header"><h3 class="card-title">Data Kehadiran Peserta Didik</h3></div><div class="card-body">
-            <div class="row">
-               <div class="col-md-12">';
-    $data .= '<table><tr><td style="padding-right: 20px">Nama Kelas</td><td>:</td><td>'.$kelas["cl_name"].'</td>';
-    $data .= '<tr><td>Bulan</td><td>:</td><td>'.$nama_bulan.'</td></tr>';
-
-    $data .= '<tr><td>Guru</td><td>:</td><td>'.$nama_guru['name'].'</td></tr></table>';
-
-    $data .= '</div></div></div>';
-
-    $data .= '<hr><table border="all" style="border-collapse: collapse; width:100%" class="table table-hover table-bordered"><thead><tr><th width="40px">No</th><th>Nama</th><th>NISN</th><th width="100px" style="text-align: center;">Sakit</th><th width="100px" style="text-align: center;">Ijin</th><th width="100px" style="text-align: center;">Tanpa Ket</th></tr></thead>';
-    $data .= '<tbody>';
-    foreach ($siswa as $siswa) {
-      $data .= '<tr>';
-      $data .= '<td style="text-align: right; padding-right: 5px;">'.$no++.'</td>';
-      $data .= '<td nowrap>'.$siswa->std_name.'</td>';
-      $data .= '<td nowrap>'.$siswa->std_nisn.'</td>';
+      $cl_code = $_POST['cl_codeb'];
+      $bulan = $_POST['dateb'];
+  
+      // Mendapatkan data kelas
+      $kelas = $this->db->get_where('app_class', ['cl_code' => $cl_code])->row_array();
+  
+      // Daftar nama bulan
+      $months = array(
+          '01' => 'Januari',
+          '02' => 'Februari',
+          '03' => 'Maret',
+          '04' => 'April',
+          '05' => 'Mei',
+          '06' => 'Juni',
+          '07' => 'Juli',
+          '08' => 'Agustus',
+          '09' => 'September',
+          '10' => 'Oktober',
+          '11' => 'November',
+          '12' => 'Desember'
+      );
+  
+      // Mendapatkan nama bulan
+      $nama_bulan = $months[$bulan];
+  
+      // Mendapatkan tanggal mulai dan akhir bulan
+      $tahun = date('Y');
+      $tanggal_awal = $tahun . '-' . $bulan . '-01';
+      $tanggal_akhir = $tahun . '-' . $bulan . '-' . date('t', strtotime($tanggal_awal));
+  
+      // Mendapatkan data siswa
+      $siswa = $this->db->get_where('app_student', ['std_class_code' => $cl_code])->result();
+  
+      // Mendapatkan nama guru
+      $this->db->select('name');
+      $this->db->from('app_absen_user');
+      $this->db->where('email', $kelas['cl_teacher']);
+      $nama_guru = $this->db->get()->row_array();
+  
+      $no = 1;
+      $data = '<div class="container-fluid">';
       
+      // Menambahkan kop surat di bagian atas
+      $data .= '<div class="kop-surat" style="text-align: center; margin-bottom: 20px;">';
+      $data .= '<img src="' . base_url('assets/img/kop.png') . '" alt="Kop Surat" style="width: 100%; max-width: 800px;">';
+      $data .= '</div>';
       
-      $this->db->where('abs_nisn', $siswa->std_nisn);
-      $this->db->where('abs_ket', '1');
-      $this->db->where('abs_bln', $bulan);
-      $sakit = $this->db->get('std_rekap_absen')->num_rows();
-      $data .= '<td style="text-align: center">'.$sakit.'</td>';
-
-      $this->db->where('abs_nisn', $siswa->std_nisn);
-      $this->db->where('abs_ket', '2');
-      $this->db->where('abs_bln', $bulan);
-      $ijin = $this->db->get('std_rekap_absen')->num_rows();
-      $data .= '<td style="text-align: center">'.$ijin.'</td>';
-
-      $this->db->where('abs_nisn', $siswa->std_nisn);
-      $this->db->where('abs_ket', '3');
-      $this->db->where('abs_bln', $bulan);
-      $bolos = $this->db->get('std_rekap_absen')->num_rows();
-      $data .= '<td style="text-align: center">'.$bolos.'</td>';
-      $data .= '</tr>';
-
-
-    }
-    $data .= '</tbody></table></div></div></div>';
-    echo $data;
+      $data .= '<div style="text-align:center" class="card-header"><h3 class="card-title">Data Kehadiran Peserta Didik</h3></div>';
+      $data .= '<div class="card-body"><div class="row"><div class="col-md-12">';
+      $data .= '<table><tr><td style="padding-right: 20px">Nama Kelas</td><td>:</td><td>'.$kelas["cl_name"].'</td></tr>';
+      $data .= '<tr><td>Bulan</td><td>:</td><td>'.$nama_bulan.' ('.$tanggal_awal.' - '.$tanggal_akhir.')</td></tr>';
+      $data .= '<tr><td>Guru</td><td>:</td><td>'.$nama_guru['name'].'</td></tr></table>';
+      $data .= '</div></div></div>';
+      $data .= '<hr><table border="all" style="border-collapse: collapse; width:100%" class="table table-hover table-bordered"><thead><tr><th width="40px">No</th><th>Nama</th><th>NISN</th><th width="100px" style="text-align: center;">Sakit</th><th width="100px" style="text-align: center;">Ijin</th><th width="100px" style="text-align: center;">Tanpa Ket</th></tr></thead>';
+      $data .= '<tbody>';
+      foreach ($siswa as $siswa) {
+          $data .= '<tr>';
+          $data .= '<td style="text-align: right; padding-right: 5px;">'.$no++.'</td>';
+          $data .= '<td nowrap>'.$siswa->std_name.'</td>';
+          $data .= '<td nowrap>'.$siswa->std_nisn.'</td>';
+          
+          $this->db->where('abs_nisn', $siswa->std_nisn);
+          $this->db->where('abs_ket', '1');
+          $this->db->where('abs_bln', $bulan);
+          $sakit = $this->db->get('std_rekap_absen')->num_rows();
+          $data .= '<td style="text-align: center">'.$sakit.'</td>';
+  
+          $this->db->where('abs_nisn', $siswa->std_nisn);
+          $this->db->where('abs_ket', '2');
+          $this->db->where('abs_bln', $bulan);
+          $ijin = $this->db->get('std_rekap_absen')->num_rows();
+          $data .= '<td style="text-align: center">'.$ijin.'</td>';
+  
+          $this->db->where('abs_nisn', $siswa->std_nisn);
+          $this->db->where('abs_ket', '3');
+          $this->db->where('abs_bln', $bulan);
+          $bolos = $this->db->get('std_rekap_absen')->num_rows();
+          $data .= '<td style="text-align: center">'.$bolos.'</td>';
+          $data .= '</tr>';
+      }
+      $data .= '</tbody></table></div></div></div>';
+      echo $data;
   }
+  
+  
 
   public function data_semester()
   {

@@ -32,6 +32,7 @@
                       <th>No</th>
                       <th>Nama</th>
                       <th>Kelas</th>
+                      <th>Keterangan Lain</th>
                       <th>Tanggal</th>
                       <th>Tahun Ajar</th>
                       <th>Semester</th>
@@ -43,6 +44,7 @@
                         <td><?= $no++ ?></td>
                         <td><?= $sakit->std_name ?></td>
                         <td><?= $sakit->std_class_name ?></td>
+                        <td><?= $sakit->abs_ket_lain ?></td>
                         <td><?= $sakit->abs_tg.' - '.$sakit->abs_bln.' - '.$sakit->abs_th ?></td>
                         <td><?= $sakit->abs_tp ?></td>
                         <td><?= $sakit->abs_semester ?></td>
