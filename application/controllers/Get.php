@@ -285,7 +285,7 @@ foreach ($siswa as $siswa) {
       
       // Menambahkan kop surat di bagian atas
       $data .= '<div class="kop-surat" style="text-align: center; margin-bottom: 20px;">';
-      $data .= '<img src="' . base_url('assets/img/kop.png') . '" alt="Kop Surat" style="width: 100%; max-width: 800px;">';
+      $data .= '<img src="' . base_url('assets/img/kopshort.png') . '" alt="Kop Surat" style="width: 100%; max-width: 800px;">';
       $data .= '</div>';
       
       $data .= '<div style="text-align:center" class="card-header"><h3 class="card-title">Data Kehadiran Harian</h3></div>';
@@ -381,7 +381,7 @@ foreach ($siswa as $siswa) {
       
       // Menambahkan kop surat di bagian atas
       $data .= '<div class="kop-surat" style="text-align: center; margin-bottom: 20px;">';
-      $data .= '<img src="' . base_url('assets/img/kop.png') . '" alt="Kop Surat" style="width: 100%; max-width: 800px;">';
+      $data .= '<img src="' . base_url('assets/img/kopshort.png') . '" alt="Kop Surat" style="width: 100%; max-width: 800px;">';
       $data .= '</div>';
       
       $data .= '<div style="text-align:center" class="card-header"><h3 class="card-title">Data Kehadiran Peserta Didik</h3></div>';
@@ -425,70 +425,73 @@ foreach ($siswa as $siswa) {
 
   public function data_semester()
   {
-    $sem = $_POST['sem'];
-    $tp = $_POST['tp'];
-    $kelass = $_POST['cl_codes'];
-
-    $kelas = $this->db->get_where('app_class', ['cl_code' => $kelass])->row_array();
-
-    $this->db->select('*');
-    $this->db->where('std_class_code', $kelass);
-    $siswa = $this->db->get('app_student')->result();
-
-    $this->db->select('name');
-    $this->db->from('app_absen_user');
-    $this->db->where('email', $kelas['cl_teacher']);
-    $nama_guru = $this->db->get()->row_array();
-
-    $no = 1;
-    $data = '';
-    $data .= '<div class="container-fluid"><div style="text-align:center" class="card-header"><h3 class="card-title">Data Kehadiran Peserta Didik</h3></div><div class="card-body">
-            <div class="row">
-               <div class="col-md-12">';
-    $data .= '<table><tr><td style="padding-right: 20px">Nama Kelas</td><td>:</td><td>'.$kelas["cl_name"].'</td>';
-    $data .= '<tr><td>Tahun Pelajaran</td><td>:</td><td>'.$tp.'</td></tr>';
-    $data .= '<tr><td>Semester</td><td>:</td><td>'.$sem.'</td></tr>';
-
-    $data .= '<tr><td>Guru</td><td>:</td><td>'.$nama_guru['name'].'</td></tr></table>';
-
-    $data .= '</div></div></div>';
-
-    $data .= '<hr><table border="all" style="border-collapse: collapse; width:100%" class="table table-hover table-bordered"><thead><tr><th width="40px">No</th><th>Nama</th><th>NISN</th><th width="100px" style="text-align: center;">Sakit</th><th width="100px" style="text-align: center;">Ijin</th><th width="100px" style="text-align: center;">Tanpa Ket</th></tr></thead>';
-    $data .= '<tbody>';
-    foreach ($siswa as $siswa) {
-      $data .= '<tr>';
-      $data .= '<td style="text-align: right; padding-right: 5px;">'.$no++.'</td>';
-      $data .= '<td nowrap>'.$siswa->std_name.'</td>';
-      $data .= '<td nowrap>'.$siswa->std_nisn.'</td>';
+      $sem = $_POST['sem'];
+      $tp = $_POST['tp'];
+      $kelass = $_POST['cl_codes'];
+  
+      // Mendapatkan data kelas
+      $kelas = $this->db->get_where('app_class', ['cl_code' => $kelass])->row_array();
+  
+      // Mendapatkan data siswa
+      $this->db->select('*');
+      $this->db->where('std_class_code', $kelass);
+      $siswa = $this->db->get('app_student')->result();
+  
+      // Mendapatkan nama guru
+      $this->db->select('name');
+      $this->db->from('app_absen_user');
+      $this->db->where('email', $kelas['cl_teacher']);
+      $nama_guru = $this->db->get()->row_array();
+  
+      $no = 1;
+      $data = '<div class="container-fluid">';
       
-      $this->db->where('abs_nisn', $siswa->std_nisn);
-      $this->db->where('abs_ket', '1');
-      $this->db->where('abs_semester', $sem);
-      $this->db->where('abs_tp', $tp);
-      $sakit = $this->db->get('std_rekap_absen')->num_rows();
-      $data .= '<td style="text-align: center">'.$sakit.'</td>';
-
-      $this->db->where('abs_nisn', $siswa->std_nisn);
-      $this->db->where('abs_ket', '2');
-      $this->db->where('abs_semester', $sem);
-      $this->db->where('abs_tp', $tp);
-      $ijin = $this->db->get('std_rekap_absen')->num_rows();
-      $data .= '<td style="text-align: center">'.$ijin.'</td>';
-
-      $this->db->where('abs_nisn', $siswa->std_nisn);
-      $this->db->where('abs_ket', '3');
-      $this->db->where('abs_semester', $sem);
-      $this->db->where('abs_tp', $tp);
-      $bolos = $this->db->get('std_rekap_absen')->num_rows();
-      $data .= '<td style="text-align: center">'.$bolos.'</td>';
-      $data .= '</tr>';
-
-
-    }
-    $data .= '</tbody></table></div></div></div>';
-    echo $data;
-
+      // Menambahkan kop surat di bagian atas
+      $data .= '<div class="kop-surat" style="text-align: center; margin-bottom: 20px;">';
+      $data .= '<img src="' . base_url('assets/img/kopshort.png') . '" alt="Kop Surat" style="width: 100%; max-width: 800px;">';
+      $data .= '</div>';
+      
+      $data .= '<div style="text-align:center" class="card-header"><h3 class="card-title">Data Kehadiran Peserta Didik</h3></div>';
+      $data .= '<div class="card-body"><div class="row"><div class="col-md-12">';
+      $data .= '<table><tr><td style="padding-right: 20px">Nama Kelas</td><td>:</td><td>'.$kelas["cl_name"].'</td></tr>';
+      $data .= '<tr><td>Tahun Pelajaran</td><td>:</td><td>'.$tp.'</td></tr>';
+      $data .= '<tr><td>Semester</td><td>:</td><td>'.$sem.'</td></tr>';
+      $data .= '<tr><td>Guru</td><td>:</td><td>'.$nama_guru['name'].'</td></tr></table>';
+      $data .= '</div></div></div>';
+      $data .= '<hr><table border="all" style="border-collapse: collapse; width:100%" class="table table-hover table-bordered"><thead><tr><th width="40px">No</th><th>Nama</th><th>NISN</th><th width="100px" style="text-align: center;">Sakit</th><th width="100px" style="text-align: center;">Ijin</th><th width="100px" style="text-align: center;">Tanpa Ket</th></tr></thead>';
+      $data .= '<tbody>';
+      foreach ($siswa as $siswa) {
+          $data .= '<tr>';
+          $data .= '<td style="text-align: right; padding-right: 5px;">'.$no++.'</td>';
+          $data .= '<td nowrap>'.$siswa->std_name.'</td>';
+          $data .= '<td nowrap>'.$siswa->std_nisn.'</td>';
+          
+          $this->db->where('abs_nisn', $siswa->std_nisn);
+          $this->db->where('abs_ket', '1');
+          $this->db->where('abs_semester', $sem);
+          $this->db->where('abs_tp', $tp);
+          $sakit = $this->db->get('std_rekap_absen')->num_rows();
+          $data .= '<td style="text-align: center">'.$sakit.'</td>';
+  
+          $this->db->where('abs_nisn', $siswa->std_nisn);
+          $this->db->where('abs_ket', '2');
+          $this->db->where('abs_semester', $sem);
+          $this->db->where('abs_tp', $tp);
+          $ijin = $this->db->get('std_rekap_absen')->num_rows();
+          $data .= '<td style="text-align: center">'.$ijin.'</td>';
+  
+          $this->db->where('abs_nisn', $siswa->std_nisn);
+          $this->db->where('abs_ket', '3');
+          $this->db->where('abs_semester', $sem);
+          $this->db->where('abs_tp', $tp);
+          $bolos = $this->db->get('std_rekap_absen')->num_rows();
+          $data .= '<td style="text-align: center">'.$bolos.'</td>';
+          $data .= '</tr>';
+      }
+      $data .= '</tbody></table></div></div></div>';
+      echo $data;
   }
+  
 
 }
 
